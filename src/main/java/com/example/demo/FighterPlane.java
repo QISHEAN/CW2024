@@ -6,16 +6,18 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 
 	public FighterPlane(String imageName, int imageHeight, double initialXPos, double initialYPos, int health) {
 		super(imageName, imageHeight, initialXPos, initialYPos);
-		this.health = health;
+		this.health = Math.max(0,health);
 	}
 
 	public abstract ActiveActorDestructible fireProjectile();
 	
 	@Override
 	public void takeDamage() {
-		health--;
-		if (healthAtZero()) {
-			this.destroy();
+		if (health > 0) {
+			health--;
+			if (healthAtZero()) {
+				this.destroy();
+			}
 		}
 	}
 
