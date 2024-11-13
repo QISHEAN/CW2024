@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
-import java.lang.reflect.InvocationTargetException;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -16,8 +15,8 @@ public class Main extends Application {
 
 
     @Override
-	public void start(Stage stage) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public void start(Stage stage) throws SecurityException,
+            IllegalArgumentException {
 
 		try {
 			// Load the FXML file
@@ -31,12 +30,8 @@ public class Main extends Application {
 			stage.setScene(scene);
 			stage.setTitle(TITLE);
 			stage.setResizable(false);
-//			stage.setHeight(SCREEN_HEIGHT);
-//			stage.setWidth(SCREEN_WIDTH);
-			stage.show();
-//        Controller myController = new Controller(stage);
-//		myController.launchGame();
-		} catch (Exception e) {
+            stage.show();
+        } catch (Exception e) {
 			System.err.println("Error loading FXML file: " + e.getMessage());
 		}
 
