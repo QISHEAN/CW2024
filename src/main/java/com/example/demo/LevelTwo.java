@@ -1,5 +1,5 @@
 package com.example.demo;
-
+import javafx.scene.Scene;
 public class LevelTwo extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/level2.jpg";
@@ -11,10 +11,16 @@ public class LevelTwo extends LevelParent {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 		boss = new Boss();
 	}
-
+	@Override
+	public Scene initializeScene() {
+		Scene scene = super.initializeScene(); // Call the parent method
+		getLevelView().showBossHealthDisplay(); // Add this line
+		return scene;
+	}
 	@Override
 	protected void initializeFriendlyUnits() {
 		getRoot().getChildren().add(getUser());
+		addEnemyUnit(getBoss());
 	}
 
 	@Override
@@ -22,7 +28,7 @@ public class LevelTwo extends LevelParent {
 		if (userIsDestroyed()) {
 			loseGame();
 		}
-		else if (boss.isDestroyed()) {
+		else if (getBoss().isDestroyed()) {
 			winGame();
 		}
 	}
@@ -30,7 +36,7 @@ public class LevelTwo extends LevelParent {
 	@Override
 	protected void spawnEnemyUnits() {
 		if (getCurrentNumberOfEnemies() == 0) {
-			addEnemyUnit(boss);
+			addEnemyUnit(getBoss());
 		}
 	}
 
