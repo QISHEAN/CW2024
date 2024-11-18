@@ -36,6 +36,8 @@ public abstract class LevelParent extends Observable {
 	private int currentNumberOfEnemies;
 	private final LevelView levelView;
 
+	private final Boss boss;
+
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
@@ -52,8 +54,13 @@ public abstract class LevelParent extends Observable {
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
+		this.boss = new Boss();
 		initializeTimeline();
 		friendlyUnits.add(user);
+	}
+
+	protected LevelView getLevelView() {
+		return levelView;
 	}
 
 	protected abstract void initializeFriendlyUnits();
@@ -63,6 +70,12 @@ public abstract class LevelParent extends Observable {
 	protected abstract void spawnEnemyUnits();
 
 	protected abstract LevelView instantiateLevelView();
+
+	// In your LevelParent subclass (e.g., LevelThree)
+
+	public Boss getBoss() {
+		return boss;
+	}
 
 	public Scene initializeScene() {
 		initializeBackground();
@@ -158,6 +171,15 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void removeAllDestroyedActors() {
+		List<ActiveActorDestructible> destroyedEnemies = enemyUnits.stream()
+				.filter(ActiveActorDestructible::isDestroyed)
+				.toList();
+
+		int enemiesDestroyed = destroyedEnemies.size();
+		if (enemiesDestroyed > 0 && this instanceof LevelOne) {
+			((LevelOne) this).incrementKillCount(enemiesDestroyed);
+		}
+
 		removeDestroyedActors(friendlyUnits);
 		removeDestroyedActors(enemyUnits);
 		removeDestroyedActors(userProjectiles);
@@ -207,6 +229,9 @@ public abstract class LevelParent extends Observable {
 	private void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
 		levelView.showShield();
+		if (boss != null) {
+			levelView.updateBossHealthText(boss.getHealth()); // Update the health on the screen
+		}
 	}
 
 	private void updateKillCount() {
@@ -223,6 +248,8 @@ public abstract class LevelParent extends Observable {
 		timeline.stop();
 		levelView.showWinImage();
 	}
+
+
 
 	protected void loseGame() {
 		timeline.stop();
