@@ -226,11 +226,16 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
-	private void updateLevelView() {
+	protected void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
 		levelView.showShield();
 		if (boss != null) {
 			levelView.updateBossHealthText(boss.getHealth()); // Update the health on the screen
+			if (boss.isShielded()) {
+				levelView.showShield(); // Implement this method in LevelView
+			} else {
+				levelView.hideShield(); // Implement this method in LevelView
+			}
 		}
 	}
 
