@@ -1,13 +1,17 @@
 package com.example.demo;
 
+import javafx.scene.Scene;
+
 public class LevelOne extends LevelParent {
-	
+
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/level1.jpg";
 	private static final String NEXT_LEVEL = "com.example.demo.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
-	private static final int KILLS_TO_ADVANCE = 10;
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
+
+	private static final int TOTAL_KILLS_TO_WIN = 10;
+	private int currentKills = 0; // Track current kill count
 
 	public LevelOne(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
@@ -18,13 +22,30 @@ public class LevelOne extends LevelParent {
 		if (userIsDestroyed()) {
 			loseGame();
 		}
-		else if (userHasReachedKillTarget())
+		else if (userHasReachedKillTarget()) {
+			winGame();
 			goToNextLevel(NEXT_LEVEL);
+		}
 	}
 
 	@Override
 	protected void initializeFriendlyUnits() {
 		getRoot().getChildren().add(getUser());
+
+	}
+
+	public void incrementKillCount(int count) {
+		currentKills += count;
+		getLevelView().updateKillCountDisplay(currentKills, TOTAL_KILLS_TO_WIN);
+	}
+
+
+	@Override
+	public Scene initializeScene() {
+		Scene scene = super.initializeScene();
+		getLevelView().showKillCountDisplay(); // Show the kill count display
+		getLevelView().updateKillCountDisplay(currentKills, TOTAL_KILLS_TO_WIN); // Initialize display
+		return scene;
 	}
 
 	@Override
@@ -45,7 +66,8 @@ public class LevelOne extends LevelParent {
 	}
 
 	private boolean userHasReachedKillTarget() {
-		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
+		return currentKills >= TOTAL_KILLS_TO_WIN;
 	}
+
 
 }
