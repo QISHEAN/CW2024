@@ -9,7 +9,7 @@ public class Boss extends FighterPlane {
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
 	private static final double BOSS_FIRE_RATE = .04;
-	private static final double BOSS_SHIELD_PROBABILITY = 0.5;
+	private static final double BOSS_SHIELD_PROBABILITY = 0;
 	private static final int IMAGE_HEIGHT = 300;
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HEALTH = 10;
@@ -25,8 +25,12 @@ public class Boss extends FighterPlane {
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
 
+	private int currentHealth;
+
+
 	public Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
+		currentHealth = HEALTH;
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;
@@ -35,6 +39,9 @@ public class Boss extends FighterPlane {
 		initializeMovePattern();
 	}
 
+	public int getHealth() {
+		return currentHealth;
+	}
 
 	@Override
 	public void updatePosition() {
@@ -61,6 +68,11 @@ public class Boss extends FighterPlane {
 	public void takeDamage() {
 		if (!isShielded) {
 			super.takeDamage();
+			currentHealth--; // Decrease health when damage is taken
+			if (currentHealth <= 0) {
+				currentHealth = 0;
+				destroy(); // Handle destruction or death logic
+			}
 		}
 	}
 
@@ -74,17 +86,10 @@ public class Boss extends FighterPlane {
 	}
 
 	private void updateShield() {
-		if (isShielded) {
-			framesWithShieldActivated++;
-			// Deactivate shield if maximum duration is reached
-			if (shieldExhausted()) {
-				deactivateShield();
-			}
-		} else if (shieldShouldBeActivated()) {
-			activateShield();
-		}
+		if (isShielded) framesWithShieldActivated++;
+		else if (shieldShouldBeActivated()) activateShield();
+		if (shieldExhausted()) deactivateShield();
 	}
-
 
 	private int getNextMove() {
 		int currentMove = movePattern.get(indexOfCurrentMove);
