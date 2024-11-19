@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import javafx.scene.Group;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
@@ -35,16 +37,19 @@ public class LevelView {
 		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSISITION);
 		this.shieldImage = new ShieldImage(SHIELD_X_POSITION, SHIELD_Y_POSITION);
 
+
 		this.bossHealthText = new Text();
-		this.bossHealthText.setFill(Color.RED);
-		this.bossHealthText.setX(SHIELD_X_POSITION);
-		this.bossHealthText.setY(SHIELD_Y_POSITION - 20); // Display slightly above the shield
+		this.bossHealthText.setFill(Color.WHITE);
+		this.bossHealthText.setX(1050);
+		this.bossHealthText.setY(50); // Display slightly above the shield
+		this.bossHealthText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		this.bossHealthPane = new Pane();
 		this.bossHealthPane.getChildren().add(bossHealthText);
 		this.killCountText = new Text();
 		this.killCountText.setFill(Color.WHITE);
-		this.killCountText.setX(10); // Adjust position as needed
+		this.killCountText.setX(1050); // Adjust position as needed
 		this.killCountText.setY(50); // Adjust position as needed
+		this.killCountText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		this.killCountText.setText(""); // Initially empty
 		this.killCountDisplayVisible = false; // Initially not visible
 
