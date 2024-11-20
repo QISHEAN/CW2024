@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import javafx.geometry.Bounds;
+
 import java.util.*;
 
 public class Boss extends FighterPlane {
@@ -139,5 +141,19 @@ public class Boss extends FighterPlane {
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
+	}
+
+	@Override
+	public void updateBoundingBox() {
+		double offsetX = 10;  // Adjust as needed
+		double offsetY = 100;  // Adjust as needed
+		double scaleWidth =  0.9;   // Adjust as needed
+		double scaleHeight = 0.3;  // Adjust as needed
+
+		Bounds bounds = this.getBoundsInParent();
+		boundingBox.setX(bounds.getMinX() + offsetX);
+		boundingBox.setY(bounds.getMinY() + offsetY);
+		boundingBox.setWidth(bounds.getWidth() * scaleWidth);
+		boundingBox.setHeight(bounds.getHeight() * scaleHeight);
 	}
 }
