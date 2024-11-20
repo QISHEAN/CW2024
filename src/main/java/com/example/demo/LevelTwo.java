@@ -54,7 +54,7 @@ public class LevelTwo extends LevelParent {
 	}
 	protected void updateLevelView() {
 		super.updateLevelView();
-		if (boss.isShielded()) {
+		if (boss.getIsShield()) {
 			if (!shieldImage.isVisible() && !isBlinking) {
 				startShieldBlinkAnimation();
 			} else {
@@ -64,7 +64,6 @@ public class LevelTwo extends LevelParent {
 			shieldImage.hideShield();
 		}
 	}
-
 	private void updateShieldPosition() {
 		// Position the shield slightly in front and above the boss
 		double shieldOffsetX = -10; // Horizontal offset

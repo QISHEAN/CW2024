@@ -263,7 +263,7 @@ public abstract class LevelParent extends Observable {
 		levelView.showShield();
 		if (boss != null) {
 			levelView.updateBossHealthText(boss.getHealth()); // Update the health on the screen
-			if (boss.isShielded()) {
+			if (boss.getIsShield()) {
 				levelView.showShield(); // Implement this method in LevelView
 			} else {
 				levelView.hideShield(); // Implement this method in LevelView
