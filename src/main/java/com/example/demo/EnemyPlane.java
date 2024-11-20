@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import javafx.geometry.Bounds;
+
 public class EnemyPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "enemyplane.png";
@@ -33,5 +35,21 @@ public class EnemyPlane extends FighterPlane {
 	public void updateActor() {
 		updatePosition();
 	}
+
+	@Override
+	public void updateBoundingBox() {
+		double offsetX = 5;  // Adjust as needed
+		double offsetY = 45;  // Adjust as needed
+		double scaleWidth = 0.9;  // Adjust as needed
+		double scaleHeight = 0.4; // Adjust as needed
+
+		Bounds bounds = this.getBoundsInParent();
+		boundingBox.setX(bounds.getMinX() + offsetX);
+		boundingBox.setY(bounds.getMinY() + offsetY);
+		boundingBox.setWidth(bounds.getWidth() * scaleWidth);
+		boundingBox.setHeight(bounds.getHeight() * scaleHeight);
+	}
+
+
 
 }
