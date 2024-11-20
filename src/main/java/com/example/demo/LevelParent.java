@@ -63,7 +63,11 @@ public abstract class LevelParent extends Observable {
 		return levelView;
 	}
 
-	protected abstract void initializeFriendlyUnits();
+	protected void initializeFriendlyUnits() {
+		root.getChildren().add(user);
+		root.getChildren().add(user.getBoundingBox()); // Add bounding box
+	}
+
 
 	protected abstract void checkIfGameOver();
 
@@ -150,6 +154,7 @@ public abstract class LevelParent extends Observable {
 		ActiveActorDestructible projectile = user.fireProjectile();
 		root.getChildren().add(projectile);
 		userProjectiles.add(projectile);
+		root.getChildren().add(projectile.getBoundingBox()); // Add bounding box
 	}
 
 	private void generateEnemyFire() {
@@ -160,16 +165,31 @@ public abstract class LevelParent extends Observable {
 		if (projectile != null) {
 			root.getChildren().add(projectile);
 			enemyProjectiles.add(projectile);
+			root.getChildren().add(projectile.getBoundingBox()); // Add bounding box
 		}
 	}
 
 	private void updateActors() {
-		friendlyUnits.forEach(ActiveActorDestructible::updateActor);
-		enemyUnits.forEach(ActiveActorDestructible::updateActor);
-		userProjectiles.forEach(ActiveActorDestructible::updateActor);
-		enemyProjectiles.forEach(ActiveActorDestructible::updateActor);
-	}
+		friendlyUnits.forEach(actor -> {
+			actor.updateActor();
+			actor.updateBoundingBox(); // Update bounding box
+		});
 
+		enemyUnits.forEach(actor -> {
+			actor.updateActor();
+			actor.updateBoundingBox(); // Update bounding box
+		});
+
+		userProjectiles.forEach(actor -> {
+			actor.updateActor();
+			actor.updateBoundingBox(); // Update bounding box
+		});
+
+		enemyProjectiles.forEach(actor -> {
+			actor.updateActor();
+			actor.updateBoundingBox(); // Update bounding box
+		});
+	}
 	private void removeAllDestroyedActors() {
 		List<ActiveActorDestructible> destroyedEnemies = enemyUnits.stream()
 				.filter(ActiveActorDestructible::isDestroyed)
@@ -187,15 +207,28 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
-		List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed)
+		List<ActiveActorDestructible> destroyedActors = actors.stream()
+				.filter(ActiveActorDestructible::isDestroyed)
 				.toList();
-		root.getChildren().removeAll(destroyedActors);
+
+		for (ActiveActorDestructible actor : destroyedActors) {
+			root.getChildren().remove(actor);
+			root.getChildren().remove(actor.getBoundingBox()); // Remove bounding box
+		}
 		actors.removeAll(destroyedActors);
 	}
 
 	private void handlePlaneCollisions() {
-		handleCollisions(friendlyUnits, enemyUnits);
+		for (ActiveActorDestructible friendly : friendlyUnits) {
+			for (ActiveActorDestructible enemy : enemyUnits) {
+				if (friendly.getBoundingBox().getBoundsInParent().intersects(enemy.getBoundingBox().getBoundsInParent())) {
+					friendly.takeDamage();
+					enemy.takeDamage();
+				}
+			}
+		}
 	}
+
 
 	private void handleUserProjectileCollisions() {
 		handleCollisions(userProjectiles, enemyUnits);
@@ -205,13 +238,12 @@ public abstract class LevelParent extends Observable {
 		handleCollisions(enemyProjectiles, friendlyUnits);
 	}
 
-	private void handleCollisions(List<ActiveActorDestructible> actors1,
-								  List<ActiveActorDestructible> actors2) {
-		for (ActiveActorDestructible actor : actors2) {
-			for (ActiveActorDestructible otherActor : actors1) {
-				if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
-					actor.takeDamage();
-					otherActor.takeDamage();
+	private void handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2) {
+		for (ActiveActorDestructible actor1 : actors1) {
+			for (ActiveActorDestructible actor2 : actors2) {
+				if (actor1.getBoundingBox().getBoundsInParent().intersects(actor2.getBoundingBox().getBoundsInParent())) {
+					actor1.takeDamage();
+					actor2.takeDamage();
 				}
 			}
 		}
@@ -276,6 +308,7 @@ public abstract class LevelParent extends Observable {
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
 		enemyUnits.add(enemy);
 		root.getChildren().add(enemy);
+		root.getChildren().add(enemy.getBoundingBox()); // Add bounding box
 	}
 
 	protected double getEnemyMaximumYPosition() {
