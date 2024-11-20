@@ -10,7 +10,7 @@ public class LevelTwo extends LevelParent {
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private final Boss boss;
 
-    private final ShieldImage shieldImage;
+	private final ShieldImage shieldImage;
 
 	private boolean isBlinking;
 	public LevelTwo(double screenHeight, double screenWidth) {
@@ -27,6 +27,7 @@ public class LevelTwo extends LevelParent {
 	@Override
 	protected void initializeFriendlyUnits() {
 		getRoot().getChildren().add(getUser());
+		getRoot().getChildren().add(getUser().getBoundingBox());
 		addEnemyUnit(getBoss());
 	}
 
@@ -49,7 +50,7 @@ public class LevelTwo extends LevelParent {
 
 	@Override
 	protected LevelView instantiateLevelView() {
-        return new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
+		return new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 	protected void updateLevelView() {
 		super.updateLevelView();
@@ -71,7 +72,7 @@ public class LevelTwo extends LevelParent {
 
 		shieldImage.setLayoutX(boss.getLayoutX() + boss.getTranslateX() + shieldOffsetX);
 		shieldImage.setLayoutY(boss.getLayoutY() + boss.getTranslateY() + shieldOffsetY);
-    }
+	}
 
 	private void startShieldBlinkAnimation() {
 		isBlinking = true;
