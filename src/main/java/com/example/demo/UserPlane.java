@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import javafx.geometry.Bounds;
+
 public class UserPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "userplane.png";
@@ -12,13 +14,10 @@ public class UserPlane extends FighterPlane {
 	private static final int IMAGE_HEIGHT = 150;
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HORIZONTAL_VELOCITY = 8;
-	private static final int PROJECTILE_X_POSITION = 110;
-	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
-	private int verticalVelocityMultiplier;
+    private int verticalVelocityMultiplier;
 	private int horizontalVelocityMultiplier;
-	private int numberOfKills;
 
-	public UserPlane(int initialHealth) {
+    public UserPlane(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		verticalVelocityMultiplier = 0;
 		horizontalVelocityMultiplier = 0;
@@ -50,12 +49,12 @@ public class UserPlane extends FighterPlane {
 	@Override
 	public void updateActor() {
 		updatePosition();
+		updateBoundingBox();
 	}
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		double projectileYPos = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-		return new UserProjectile(getTranslateX() + PROJECTILE_X_POSITION, projectileYPos);
+        return new UserProjectile(getProjectileXPosition(50), getProjectileYPosition(25));
 	}
 
 	private boolean isMovingVertically() {
@@ -98,12 +97,22 @@ public class UserPlane extends FighterPlane {
 		stopHorizontalMovement();
 	}
 
-	public int getNumberOfKills() {
-		return numberOfKills;
-	}
-
 	public void incrementKillCount() {
-		numberOfKills++;
+    }
+
+	@Override
+	public void updateBoundingBox() {
+		// Apply offsets and scaling factors specific to UserPlane
+		double offsetX = 10; // Adjust as needed
+		double offsetY = 50;  // Adjust as needed
+		double scaleWidth = 0.9;  // 80% of the image width
+		double scaleHeight = 0.3; // 90% of the image height
+
+		Bounds bounds = this.getBoundsInParent();
+		boundingBox.setX(bounds.getMinX() + offsetX);
+		boundingBox.setY(bounds.getMinY() + offsetY);
+		boundingBox.setWidth(bounds.getWidth() * scaleWidth);
+		boundingBox.setHeight(bounds.getHeight() * scaleHeight);
 	}
 
 }
