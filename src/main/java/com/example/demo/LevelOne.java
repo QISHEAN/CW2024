@@ -30,9 +30,13 @@ public class LevelOne extends LevelParent {
 
 	@Override
 	protected void initializeFriendlyUnits() {
+		// Add the user plane to the scene
 		getRoot().getChildren().add(getUser());
 
+		// Add the user plane's bounding box to the scene
+		getRoot().getChildren().add(getUser().getBoundingBox()); // Add bounding box
 	}
+
 
 	public void incrementKillCount(int count) {
 		currentKills += count;
