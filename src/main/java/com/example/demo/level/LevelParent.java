@@ -17,9 +17,9 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Observable;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public abstract class LevelParent extends Observable {
+public abstract class LevelParent{
 
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 50;
@@ -39,9 +39,11 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
 	private int currentNumberOfEnemies;
-	private final LevelView levelView;
+    private final LevelView levelView;
 
 	private final Boss boss;
+
+	private final List<LevelListener> levelListeners = new CopyOnWriteArrayList<>();
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
@@ -59,9 +61,24 @@ public abstract class LevelParent extends Observable {
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
-		this.boss = new Boss();
+        this.boss = new Boss();
 		initializeTimeline();
 		friendlyUnits.add(user);
+	}
+
+	public void addLevelListener(LevelListener listener) {
+		levelListeners.add(listener);
+	}
+
+	public void removeLevelListener(LevelListener listener) {
+		levelListeners.remove(listener);
+	}
+
+	protected void notifyLevelChange(String nextLevelClassName) {
+		List<LevelListener> listenersCopy = new ArrayList<>(levelListeners); // Create a copy
+		for (LevelListener listener : listenersCopy) { // Iterate over the copy
+			listener.onLevelChange(nextLevelClassName);
+		}
 	}
 
 	protected LevelView getLevelView() {
@@ -99,8 +116,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	public void goToNextLevel(String levelName) {
-		setChanged();
-		notifyObservers(levelName);
+		notifyLevelChange(levelName);
 	}
 
 	private void updateScene() {
@@ -330,6 +346,6 @@ public abstract class LevelParent extends Observable {
 
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies = enemyUnits.size();
-	}
+    }
 
 }
