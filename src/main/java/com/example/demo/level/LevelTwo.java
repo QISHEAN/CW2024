@@ -1,7 +1,6 @@
 package com.example.demo.level;
 
 import com.example.demo.actor.Boss;
-import com.example.demo.level.LevelParent;
 import com.example.demo.levelview.LevelView;
 import com.example.demo.levelview.LevelViewLevelTwo;
 import com.example.demo.ui.ShieldImage;
