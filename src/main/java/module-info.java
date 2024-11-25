@@ -1,6 +1,7 @@
 module com.example.demo {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.logging;
 
     opens com.example.demo.controller to javafx.fxml;  // Open to javafx.fxml for FXML access
     exports com.example.demo.controller;
