@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.actor;
 
+import com.example.demo.projectiles.BossProjectile;
 import javafx.geometry.Bounds;
 
 import java.util.*;

@@ -1,5 +1,9 @@
-package com.example.demo;
+package com.example.demo.levelview;
 
+import com.example.demo.ui.GameOverImage;
+import com.example.demo.ui.HeartDisplay;
+import com.example.demo.ui.ShieldImage;
+import com.example.demo.ui.WinImage;
 import javafx.scene.Group;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;

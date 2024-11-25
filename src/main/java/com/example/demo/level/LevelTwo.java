@@ -1,5 +1,10 @@
-package com.example.demo;
+package com.example.demo.level;
 
+import com.example.demo.actor.Boss;
+import com.example.demo.level.LevelParent;
+import com.example.demo.levelview.LevelView;
+import com.example.demo.levelview.LevelViewLevelTwo;
+import com.example.demo.ui.ShieldImage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;

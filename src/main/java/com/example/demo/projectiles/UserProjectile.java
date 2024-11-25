@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.projectiles;
 
+import com.example.demo.projectiles.Projectile;
 import javafx.geometry.Bounds;
 
 public class UserProjectile extends Projectile {

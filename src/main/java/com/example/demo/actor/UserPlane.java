@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.actor;
 
+import com.example.demo.projectiles.UserProjectile;
 import javafx.geometry.Bounds;
 
 public class UserPlane extends FighterPlane {
