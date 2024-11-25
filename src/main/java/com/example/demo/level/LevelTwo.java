@@ -20,7 +20,7 @@ public class LevelTwo extends LevelParent {
 	public LevelTwo(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 		boss = new Boss();
-		this.shieldImage = new ShieldImage(0,0);
+		this.shieldImage = new ShieldImage();
 	}
 	@Override
 	public Scene initializeScene() {
