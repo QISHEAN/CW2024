@@ -1,6 +1,7 @@
 package com.example.demo.actor;
 
 import javafx.geometry.Bounds;
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -54,5 +55,15 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 	// Getter for the bounding box
 	public Rectangle getBoundingBox() {
 		return boundingBox;
+	}
+
+	// Add the removePlane method
+	public void removePlane(Group root) {
+		// Remove this actor's graphical representation from the root group
+		root.getChildren().remove(this);
+		root.getChildren().remove(this.getBoundingBox());
+		// Mark as destroyed if not already
+		setDestroyed();
+		// Perform any additional cleanup if necessary
 	}
 }
