@@ -39,7 +39,7 @@ public abstract class LevelParent{
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
 	private int currentNumberOfEnemies;
-    private final LevelView levelView;
+	private final LevelView levelView;
 
 	private final Boss boss;
 
@@ -61,7 +61,7 @@ public abstract class LevelParent{
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
-        this.boss = new Boss();
+		this.boss = new Boss();
 		initializeTimeline();
 		friendlyUnits.add(user);
 	}
@@ -271,12 +271,17 @@ public abstract class LevelParent{
 	}
 
 	private void handleEnemyPenetration() {
-		for (ActiveActorDestructible enemy : enemyUnits) {
+		List<ActiveActorDestructible> enemiesToRemove = new ArrayList<>();
+
+		for (ActiveActorDestructible enemy : new ArrayList<>(enemyUnits)) {
 			if (enemyHasPenetratedDefenses(enemy)) {
 				user.takeDamage();
-				enemy.destroy();
+				enemy.removePlane(getRoot());
+				enemiesToRemove.add(enemy);
 			}
 		}
+
+		enemyUnits.removeAll(enemiesToRemove);
 	}
 
 	protected void updateLevelView() {
@@ -346,6 +351,6 @@ public abstract class LevelParent{
 
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies = enemyUnits.size();
-    }
+	}
 
 }
