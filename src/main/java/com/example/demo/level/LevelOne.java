@@ -26,7 +26,6 @@ public class LevelOne extends LevelParent {
 			loseGame();
 		}
 		else if (userHasReachedKillTarget()) {
-			winGame();
 			goToNextLevel(NEXT_LEVEL);
 		}
 	}
