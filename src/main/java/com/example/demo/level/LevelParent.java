@@ -5,6 +5,7 @@ import com.example.demo.actor.Boss;
 import com.example.demo.actor.FighterPlane;
 import com.example.demo.actor.UserPlane;
 import com.example.demo.levelview.LevelView;
+import com.example.demo.managers.PauseManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -45,6 +46,8 @@ public abstract class LevelParent{
 
 	private final List<LevelListener> levelListeners = new CopyOnWriteArrayList<>();
 
+	private final PauseManager pauseManager;
+
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
@@ -64,6 +67,7 @@ public abstract class LevelParent{
 		this.boss = new Boss();
 		initializeTimeline();
 		friendlyUnits.add(user);
+		pauseManager = new PauseManager(scene, root, this::onPause, this::onResume, this::exitToMainMenu, this::restartLevel);
 	}
 
 	public void addLevelListener(LevelListener listener) {
@@ -103,6 +107,8 @@ public abstract class LevelParent{
 		return boss;
 	}
 
+
+
 	public Scene initializeScene() {
 		initializeBackground();
 		initializeFriendlyUnits();
@@ -139,6 +145,36 @@ public abstract class LevelParent{
 		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
 		timeline.getKeyFrames().add(gameLoop);
 	}
+	private void onPause() {
+		timeline.pause();
+	}
+
+	private void onResume() {
+		timeline.play();
+		background.requestFocus();
+	}
+
+	private void exitToMainMenu() {
+		// Notify the controller to load the main menu
+		notifyExitToMainMenu();
+	}
+
+	private void restartLevel() {
+		// Notify the controller to restart the level
+		notifyRestartLevel();
+	}
+
+	private void notifyExitToMainMenu() {
+		for (LevelListener listener : levelListeners) {
+			listener.exitToMainMenu();
+		}
+	}
+
+	private void notifyRestartLevel() {
+		for (LevelListener listener : levelListeners) {
+			listener.restartLevel();
+		}
+	}
 
 	private void initializeBackground() {
 		background.setFocusTraversable(true);
@@ -148,19 +184,18 @@ public abstract class LevelParent{
 			KeyCode kc = e.getCode();
 
 			// Check for directional keys to move the user
-			if (kc == KeyCode.UP) {
-				user.moveUp();
-			} else if (kc == KeyCode.DOWN) {
-				user.moveDown();
-			} else if (kc == KeyCode.RIGHT) {
-				user.moveRight();
-			} else if (kc == KeyCode.LEFT) {
-				user.moveLeft();
-			}
-
-			// Check for space key to fire a projectile
-			if (kc == KeyCode.SPACE) {
-				fireProjectile();
+			if (!pauseManager.isPaused()) {
+				if (kc == KeyCode.UP) {
+					user.moveUp();
+				} else if (kc == KeyCode.DOWN) {
+					user.moveDown();
+				} else if (kc == KeyCode.RIGHT) {
+					user.moveRight();
+				} else if (kc == KeyCode.LEFT) {
+					user.moveLeft();
+				} else if (kc == KeyCode.SPACE) {
+					fireProjectile();
+				}
 			}
 		});
 
