@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.util.logging.*;
 
@@ -24,6 +26,10 @@ public class MenuController {
         rootLogger.addHandler(handler);
         rootLogger.setLevel(Level.ALL); // Set global logging level
     }
+
+    public Label titleLabel;
+    public Button startButton;
+    public Button exitButton;
 
     private Stage stage;
 
