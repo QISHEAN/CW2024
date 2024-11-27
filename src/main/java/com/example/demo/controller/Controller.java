@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.level.LevelListener;
 import com.example.demo.level.LevelParent;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -11,8 +13,6 @@ import java.lang.reflect.Constructor;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 
 public class Controller implements LevelListener {
 
@@ -52,16 +52,23 @@ public class Controller implements LevelListener {
 		}
 	}
 
-	private void goToLevel(String className) throws Exception {
-		removeLevelListener();
-		Class<?> myClass = Class.forName(className);
-		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-		LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
-		currentLevel = myLevel;
-		myLevel.addLevelListener(this); // Add this controller as a listener
-		Scene scene = myLevel.initializeScene();
-		stage.setScene(scene);
-		myLevel.startGame();
+	private void goToLevel(String className) {
+		Platform.runLater(() -> {
+			try {
+				removeLevelListener();
+				Class<?> myClass = Class.forName(className);
+				Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
+				LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+				currentLevel = myLevel;
+				myLevel.addLevelListener(this); // Add this controller as a listener
+				Scene scene = myLevel.initializeScene();
+				stage.setScene(scene);
+				myLevel.startGame();
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "Error loading level: " + className, e);
+				showErrorAlert(e);
+			}
+		});
 	}
 
 	private void removeLevelListener() {
@@ -83,13 +90,43 @@ public class Controller implements LevelListener {
 			}
 		});
 	}
+	public void exitToMainMenu() {
+		Platform.runLater(() -> {
+			try {
+				loadMainMenu();
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "Error exiting to main menu", e);
+				showErrorAlert(e);
+			}
+		});
+	}
+
+	@Override
+	public void restartLevel() {
+		if (currentLevel != null) {
+			String currentLevelClassName = currentLevel.getClass().getName();
+			goToLevel(currentLevelClassName);
+		}
+	}
+
+	private void loadMainMenu() throws Exception {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuScreen.fxml"));
+		Parent root = loader.load();
+		MenuController menuController = loader.getController();
+		menuController.setStage(stage);
+		Scene scene = new Scene(root, 1300, 750);
+		stage.setScene(scene);
+	}
 
 	private void showErrorAlert(Exception e) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText("An error occurred");
 		alert.setContentText(e.getMessage());
-		alert.show();
+		alert.showAndWait();
 		// Log the exception
 		logger.log(Level.SEVERE, "An exception occurred", e);
 	}
+
 
 }
