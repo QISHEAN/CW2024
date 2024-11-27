@@ -4,15 +4,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane style="-fx-background-image: url('/menuScreen.jpg'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/21.0.5" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.MenuController">
-    <children>
-        <!-- Title Label -->
-        <Label fx:id="titleLabel" layoutX="561.0" layoutY="240.0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;-fx-font-family: 'font name';" text="Sky Battle" />
+<Pane style="-fx-background-image: url('/menuScreen.jpg'); -fx-background-size: cover;"
+      xmlns="http://javafx.com/javafx/21.0.5" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demo.controller.MenuController">
+    <!-- Title Label -->
+    <Label fx:id="titleLabel" layoutX="561.0" layoutY="240.0"
+           style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;-fx-font-family: 'font name';"
+           text="Sky Battle"/>
 
-        <!-- Start Game Button -->
-        <Button fx:id="startButton" layoutX="571.0" layoutY="351.0" onAction="#handleStartButton" prefHeight="40.0" prefWidth="150.0" text="Start Game" />
+    <!-- Start Game Button -->
+    <Button fx:id="startButton" layoutX="571.0" layoutY="351.0" onAction="#handleStartButton" prefHeight="40.0"
+            prefWidth="150.0" text="Start Game"/>
 
-        <!-- Exit Button -->
-        <Button fx:id="exitButton" layoutX="571.0" layoutY="410.0" onAction="#handleExitButton" prefHeight="40.0" prefWidth="150.0" text="Exit" />
-    </children>
+    <!-- Exit Button -->
+    <Button fx:id="exitButton" layoutX="571.0" layoutY="410.0" onAction="#handleExitButton" prefHeight="40.0"
+            prefWidth="150.0" text="Exit"/>
 </Pane>
