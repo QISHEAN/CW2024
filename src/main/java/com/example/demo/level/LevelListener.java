@@ -5,4 +5,6 @@ package com.example.demo.level;
 
 public interface LevelListener {
     void onLevelChange(String nextLevelClassName);
+    void exitToMainMenu();
+    void restartLevel();
 }
