@@ -15,10 +15,10 @@ public class UserPlane extends FighterPlane {
 	private static final int IMAGE_HEIGHT = 150;
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HORIZONTAL_VELOCITY = 8;
-    private int verticalVelocityMultiplier;
+	private int verticalVelocityMultiplier;
 	private int horizontalVelocityMultiplier;
 
-    public UserPlane(int initialHealth) {
+	public UserPlane(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		verticalVelocityMultiplier = 0;
 		horizontalVelocityMultiplier = 0;
@@ -55,7 +55,7 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-        return new UserProjectile(getProjectileXPosition(50), getProjectileYPosition(25));
+		return new UserProjectile(getProjectileXPosition(50), getProjectileYPosition(25));
 	}
 
 	private boolean isMovingVertically() {
@@ -99,7 +99,7 @@ public class UserPlane extends FighterPlane {
 	}
 
 	public void incrementKillCount() {
-    }
+	}
 
 	@Override
 	public void updateBoundingBox() {
