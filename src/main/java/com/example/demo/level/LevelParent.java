@@ -189,10 +189,10 @@ public abstract class LevelParent{
 					user.moveUp();
 				} else if (kc == KeyCode.DOWN) {
 					user.moveDown();
-				} else if (kc == KeyCode.RIGHT) {
-					user.moveRight();
 				} else if (kc == KeyCode.LEFT) {
 					user.moveLeft();
+				} else if (kc == KeyCode.RIGHT) {
+					user.moveRight();
 				} else if (kc == KeyCode.SPACE) {
 					fireProjectile();
 				}
@@ -201,8 +201,16 @@ public abstract class LevelParent{
 
 		background.setOnKeyReleased(e -> {
 			KeyCode kc = e.getCode();
-			if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stop();
+
+			if (kc == KeyCode.UP || kc == KeyCode.DOWN) {
+				user.stopVerticalMovement();
+			}
+
+			if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT) {
+				user.stopHorizontalMovement();
+			}
 		});
+
 		root.getChildren().add(0, background);
 	}
 
@@ -246,14 +254,18 @@ public abstract class LevelParent{
 			actor.updateBoundingBox(); // Update bounding box
 		});
 	}
+
+	protected void incrementKillCount(int count){
+
+	}
 	private void removeAllDestroyedActors() {
 		List<ActiveActorDestructible> destroyedEnemies = enemyUnits.stream()
 				.filter(ActiveActorDestructible::isDestroyed)
 				.toList();
 
 		int enemiesDestroyed = destroyedEnemies.size();
-		if (enemiesDestroyed > 0 && this instanceof LevelOne) {
-			((LevelOne) this).incrementKillCount(enemiesDestroyed);
+		if (enemiesDestroyed > 0) {
+			incrementKillCount(enemiesDestroyed);
 		}
 
 		removeDestroyedActors(friendlyUnits);
