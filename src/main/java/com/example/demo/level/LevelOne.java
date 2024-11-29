@@ -1,6 +1,4 @@
 package com.example.demo.level;
-
-import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.EnemyPlane;
 import com.example.demo.levelview.LevelView;
 import javafx.scene.Scene;
@@ -39,12 +37,10 @@ public class LevelOne extends LevelParent {
 		getRoot().getChildren().add(getUser().getBoundingBox()); // Add bounding box
 	}
 
-
 	public void incrementKillCount(int count) {
 		currentKills += count;
 		getLevelView().updateKillCountDisplay(currentKills, TOTAL_KILLS_TO_WIN);
 	}
-
 
 	@Override
 	public Scene initializeScene() {
@@ -60,7 +56,11 @@ public class LevelOne extends LevelParent {
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
 			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
 				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
-				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
+				EnemyPlane newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition, 1); // Increased health
+
+				// Increase enemy speed
+				newEnemy.setSpeed(newEnemy.getSpeed());
+
 				addEnemyUnit(newEnemy);
 			}
 		}
@@ -74,6 +74,4 @@ public class LevelOne extends LevelParent {
 	private boolean userHasReachedKillTarget() {
 		return currentKills >= TOTAL_KILLS_TO_WIN;
 	}
-
-
 }
