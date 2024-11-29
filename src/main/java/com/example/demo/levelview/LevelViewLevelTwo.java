@@ -1,30 +1,46 @@
 package com.example.demo.levelview;
 
-import com.example.demo.ui.ShieldImage;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class LevelViewLevelTwo extends LevelView {
 
-	private final Group root;
-	private final ShieldImage shieldImage;
+    private Label warningLabel; // Example: A special warning for LevelTwo
 
-	public LevelViewLevelTwo(Group root, int heartsToDisplay) {
-		super(root, heartsToDisplay);
-		this.root = root;
-		this.shieldImage = new ShieldImage();
-		addImagesToRoot();
-	}
+    public LevelViewLevelTwo(Group root, int playerInitialHealth) {
+        super(root, playerInitialHealth);
+        initializeCustomUI(root);
+    }
 
-	private void addImagesToRoot() {
-		root.getChildren().addAll(shieldImage);
-	}
+    // Add custom UI elements for LevelTwo
+    private void initializeCustomUI(Group root) {
+        // Add a warning label specific to LevelTwo
+        warningLabel = new Label("Enemies are stronger! Stay alert!");
+        warningLabel.setFont(new Font("Arial", 20));
+        warningLabel.setTextFill(Color.RED);
+        warningLabel.setLayoutX(50);
+        warningLabel.setLayoutY(20);
 
-	public void showShield() {
-		shieldImage.showShield();
-	}
+        // Add the warning label to the root group
+        root.getChildren().add(warningLabel);
+    }
 
-	public void hideShield() {
-		shieldImage.hideShield();
-	}
+    @Override
+    public void showKillCountDisplay() {
+        // Override to customize kill count display for LevelTwo
+        super.showKillCountDisplay();
+        // Optionally add more elements here
+    }
 
+    @Override
+    public void updateKillCountDisplay(int currentKills, int totalKillsToWin) {
+        // Customize kill count update if needed
+        super.updateKillCountDisplay(currentKills, totalKillsToWin);
+        // Example: Show a motivational message as kills increase
+        if (currentKills > totalKillsToWin / 2) {
+            warningLabel.setText("You're halfway there! Keep going!");
+        }
+    }
 }
