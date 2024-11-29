@@ -93,11 +93,6 @@ public class UserPlane extends FighterPlane {
 	}
 
 
-	public void stop() {
-		stopVerticalMovement();
-		stopHorizontalMovement();
-	}
-
 	public void incrementKillCount() {
 	}
 
