@@ -1,10 +1,12 @@
 package com.example.demo.managers;
 
 import com.example.demo.controller.PauseMenuController;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +36,7 @@ public class PauseManager {
 
     private void initializePauseMenu(Runnable restartAction, Runnable mainMenuAction) {
         try {
-            URL resource = PauseManager.class.getResource("/PauseMenu.fxml");
+            URL resource = getClass().getResource("/PauseMenu.fxml");
             FXMLLoader loader = new FXMLLoader(resource);
             loader.load();
             pauseMenuController = loader.getController();
@@ -49,19 +51,22 @@ public class PauseManager {
     }
 
     public void initializePauseHandler() {
-        scene.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.ESCAPE) {
-                if (isPaused) {
-                    resumeGame();
-                } else {
-                    pauseGame();
-                }
-            }
-        });
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, pauseHandler);
     }
 
+    private final EventHandler<KeyEvent> pauseHandler = e -> {
+        if (e.getCode() == KeyCode.ESCAPE) {
+            e.consume(); // Prevent the event from propagating
+            if (isPaused) {
+                resumeGame();
+            } else {
+                pauseGame();
+            }
+        }
+    };
+
     private void pauseGame() {
-        pauseAction.run();
+        pauseAction.run(); // Call the pause action (e.g., stop timelines)
         if (pauseMenuController != null) {
             root.getChildren().add(pauseMenuController.getPauseRoot());
         }
@@ -69,11 +74,12 @@ public class PauseManager {
     }
 
     private void resumeGame() {
-        resumeAction.run();
+        resumeAction.run(); // Call the resume action (e.g., restart timelines)
         if (pauseMenuController != null) {
             root.getChildren().remove(pauseMenuController.getPauseRoot());
         }
         isPaused = false;
+        root.requestFocus(); // Ensure the scene regains focus
     }
 
     public boolean isPaused() {
