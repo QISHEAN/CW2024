@@ -25,7 +25,6 @@ public class Main extends Application {
 			Parent root = loader.load();
 			MenuController menuController = loader.getController();
 			menuController.setStage(stage);
-
 			// Create the Scene with FXML root and set it on the stage
 			Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 			stage.setScene(scene);
