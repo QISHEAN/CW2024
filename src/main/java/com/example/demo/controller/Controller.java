@@ -58,7 +58,7 @@ public class Controller implements LevelListener {
 				removeLevelListener();
 				Class<?> myClass = Class.forName(className);
 				Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-				LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+				LevelParent myLevel = (LevelParent) constructor.newInstance(1300, 750);
 				currentLevel = myLevel;
 				myLevel.addLevelListener(this); // Add this controller as a listener
 				Scene scene = myLevel.initializeScene();
