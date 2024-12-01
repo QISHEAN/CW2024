@@ -7,19 +7,18 @@ import javafx.scene.Scene;
 
 public class LevelTwo extends LevelParent {
 
-    private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/level2.jpg";
+    private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background.jpg";
     private static final String NEXT_LEVEL = "com.example.demo.level.BossLevel";
     private static final int TOTAL_ENEMIES = 7; // Increased total enemies
     private static final double ENEMY_SPAWN_PROBABILITY = .25; // Faster spawn probability
     private static final int PLAYER_INITIAL_HEALTH = 5;
 
-    private static final int TOTAL_KILLS_TO_WIN = 15; // Higher kill count target
+    private static final int TOTAL_KILLS_TO_WIN = 10; // Higher kill count target
     private int currentKills = 0; // Track current kill count
 
-    // Duplicate declaration removed
+    public LevelTwo(double screenWidth, double screenHeight) {
 
-    public LevelTwo(double screenHeight, double screenWidth) {
-        super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+        super(BACKGROUND_IMAGE_NAME, screenWidth, screenHeight,PLAYER_INITIAL_HEALTH);
     }
 
     @Override
@@ -33,11 +32,6 @@ public class LevelTwo extends LevelParent {
 
     @Override
     protected void initializeFriendlyUnits() {
-        // Add the user plane to the scene
-        getRoot().getChildren().add(getUser());
-
-        // Add the user plane's bounding box to the scene
-        getRoot().getChildren().add(getUser().getBoundingBox());
     }
 
     public void incrementKillCount(int count) {
