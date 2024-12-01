@@ -93,9 +93,6 @@ public class UserPlane extends FighterPlane {
 	}
 
 
-	public void incrementKillCount() {
-	}
-
 	@Override
 	public void updateBoundingBox() {
 		// Apply offsets and scaling factors specific to UserPlane
