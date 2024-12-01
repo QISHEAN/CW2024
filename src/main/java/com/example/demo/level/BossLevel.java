@@ -10,15 +10,15 @@ import javafx.scene.Scene;
 import javafx.util.Duration;
 public class BossLevel extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/level2.jpg";
+	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background.jpg";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private final Boss boss;
 
 	private final ShieldImage shieldImage;
 
 	private boolean isBlinking;
-	public BossLevel(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+	public BossLevel(double screenWidth, double screenHeight) {
+		super(BACKGROUND_IMAGE_NAME, screenWidth, screenHeight,PLAYER_INITIAL_HEALTH);
 		boss = new Boss();
 		this.shieldImage = new ShieldImage();
 	}
@@ -30,9 +30,6 @@ public class BossLevel extends LevelParent {
 	}
 	@Override
 	protected void initializeFriendlyUnits() {
-		getRoot().getChildren().add(getUser());
-		getRoot().getChildren().add(getUser().getBoundingBox());
-		addEnemyUnit(getBoss());
 	}
 
 	@Override
