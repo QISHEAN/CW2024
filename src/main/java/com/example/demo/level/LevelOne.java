@@ -5,39 +5,34 @@ import javafx.scene.Scene;
 
 public class LevelOne extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/level1.jpg";
+	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background.jpg";
 	private static final String NEXT_LEVEL = "com.example.demo.level.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
-	private static final double ENEMY_SPAWN_PROBABILITY = .20;
+	private static final double ENEMY_SPAWN_PROBABILITY = 0.20;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 
-	private static final int TOTAL_KILLS_TO_WIN = 10;
+	private static final int TOTAL_KILLS_TO_WIN = 5;
 	private int currentKills = 0; // Track current kill count
 
-	public LevelOne(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+	public LevelOne(double screenWidth, double screenHeight) {
+		super(BACKGROUND_IMAGE_NAME, screenWidth, screenHeight,PLAYER_INITIAL_HEALTH);
 	}
 
 	@Override
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
-		}
-		else if (userHasReachedKillTarget()) {
+		} else if (userHasReachedKillTarget()) {
 			goToNextLevel(NEXT_LEVEL);
 		}
 	}
 
 	@Override
 	protected void initializeFriendlyUnits() {
-		// Add the user plane to the scene
-		getRoot().getChildren().add(getUser());
-
-		// Add the user plane's bounding box to the scene
-		getRoot().getChildren().add(getUser().getBoundingBox()); // Add bounding box
 	}
 
-	public void incrementKillCount(int count) {
+	@Override
+	protected void incrementKillCount(int count) {
 		currentKills += count;
 		getLevelView().updateKillCountDisplay(currentKills, TOTAL_KILLS_TO_WIN);
 	}
@@ -56,11 +51,7 @@ public class LevelOne extends LevelParent {
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
 			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
 				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
-				EnemyPlane newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition, 1); // Increased health
-
-				// Increase enemy speed
-				newEnemy.setSpeed(newEnemy.getSpeed());
-
+				EnemyPlane newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition, 1); // Enemy health is 1
 				addEnemyUnit(newEnemy);
 			}
 		}
