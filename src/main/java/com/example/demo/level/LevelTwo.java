@@ -3,7 +3,9 @@ package com.example.demo.level;
 import com.example.demo.actor.EnemyPlane;
 import com.example.demo.levelview.LevelViewLevelTwo;
 import com.example.demo.levelview.LevelView; // Import LevelView
+import com.example.demo.managers.SoundManager;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class LevelTwo extends LevelParent {
 
@@ -16,9 +18,9 @@ public class LevelTwo extends LevelParent {
     private static final int TOTAL_KILLS_TO_WIN = 10; // Higher kill count target
     private int currentKills = 0; // Track current kill count
 
-    public LevelTwo(double screenWidth, double screenHeight) {
+    public LevelTwo(double screenWidth, double screenHeight, SoundManager soundManager, Stage stage) {
 
-        super(BACKGROUND_IMAGE_NAME, screenWidth, screenHeight,PLAYER_INITIAL_HEALTH);
+        super(BACKGROUND_IMAGE_NAME, screenWidth, screenHeight, PLAYER_INITIAL_HEALTH, soundManager,stage);
     }
 
     @Override
