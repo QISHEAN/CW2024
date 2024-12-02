@@ -20,7 +20,7 @@ public class LevelViewLevelTwo extends LevelView {
         warningLabel = new Label("Enemies are stronger! Stay alert!");
         warningLabel.setFont(new Font("Arial", 20));
         warningLabel.setTextFill(Color.RED);
-        warningLabel.setLayoutX(50);
+        warningLabel.setLayoutX(300);
         warningLabel.setLayoutY(20);
 
         // Add the warning label to the root group
