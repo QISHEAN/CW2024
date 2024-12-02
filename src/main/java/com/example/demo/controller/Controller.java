@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.level.LevelListener;
 import com.example.demo.level.LevelParent;
+import com.example.demo.managers.SoundManager;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,10 +38,12 @@ public class Controller implements LevelListener {
 		consoleHandler.setLevel(Level.ALL);
 	}
 	private final Stage stage;
+	private final SoundManager soundManager;
 	private LevelParent currentLevel;  // Reference to the current level
 
-	public Controller(Stage stage) {
+	public Controller(Stage stage, SoundManager soundManager) {
 		this.stage = stage;
+		this.soundManager = soundManager;
 	}
 
 	public void launchGame() {
@@ -57,8 +60,8 @@ public class Controller implements LevelListener {
 			try {
 				removeLevelListener();
 				Class<?> myClass = Class.forName(className);
-				Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-				LevelParent myLevel = (LevelParent) constructor.newInstance(1300, 750);
+				Constructor<?> constructor = myClass.getConstructor(double.class, double.class, SoundManager.class,Stage.class);
+				LevelParent myLevel = (LevelParent) constructor.newInstance(1300, 750, soundManager,stage);
 				currentLevel = myLevel;
 				myLevel.addLevelListener(this); // Add this controller as a listener
 				Scene scene = myLevel.initializeScene();
@@ -73,8 +76,9 @@ public class Controller implements LevelListener {
 
 	private void removeLevelListener() {
 		if (currentLevel != null) {
-			currentLevel.removeLevelListener(this); // Remove this controller as a listener
-			stage.setScene(null);  // Remove the current scene
+			currentLevel.removeLevelListener(this);
+			currentLevel.stopGame(); // Add this line
+			stage.setScene(null);
 			currentLevel = null;
 		}
 	}
