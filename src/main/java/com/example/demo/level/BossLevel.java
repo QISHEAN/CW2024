@@ -3,10 +3,12 @@ package com.example.demo.level;
 import com.example.demo.actor.Boss;
 import com.example.demo.levelview.LevelView;
 import com.example.demo.levelview.LevelViewBoss;
+import com.example.demo.managers.SoundManager;
 import com.example.demo.ui.ShieldImage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 public class BossLevel extends LevelParent {
 
@@ -17,8 +19,8 @@ public class BossLevel extends LevelParent {
 	private final ShieldImage shieldImage;
 
 	private boolean isBlinking;
-	public BossLevel(double screenWidth, double screenHeight) {
-		super(BACKGROUND_IMAGE_NAME, screenWidth, screenHeight,PLAYER_INITIAL_HEALTH);
+	public BossLevel(double screenWidth, double screenHeight, SoundManager soundManager, Stage stage) {
+		super(BACKGROUND_IMAGE_NAME, screenWidth, screenHeight,PLAYER_INITIAL_HEALTH, soundManager,stage);
 		boss = new Boss();
 		this.shieldImage = new ShieldImage();
 	}
@@ -30,6 +32,13 @@ public class BossLevel extends LevelParent {
 	}
 	@Override
 	protected void initializeFriendlyUnits() {
+	}
+
+	@Override
+	public void startGame() {
+		background.requestFocus();
+		timeline.play();
+		soundManager.playBackgroundMusic("/sounds/boss.background.mp3"); // Boss-specific music
 	}
 
 	@Override
