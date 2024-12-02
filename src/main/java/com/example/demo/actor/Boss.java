@@ -145,7 +145,7 @@ public class Boss extends FighterPlane {
 
 	@Override
 	public void updateBoundingBox() {
-		double offsetX = 10;  // Adjust as needed
+		double offsetX = 50;  // Adjust as needed
 		double offsetY = 100;  // Adjust as needed
 		double scaleWidth =  0.9;   // Adjust as needed
 		double scaleHeight = 0.3;  // Adjust as needed
