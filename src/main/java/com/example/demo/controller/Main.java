@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.managers.SoundManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,10 +15,11 @@ public class Main extends Application {
 	private static final String TITLE = "Sky Battle";
 
 
-
-    @Override
+	@Override
 	public void start(Stage stage) throws SecurityException,
-            IllegalArgumentException {
+			IllegalArgumentException {
+		SoundManager soundManager = new SoundManager();
+
 
 		try {
 			// Load the FXML file
@@ -25,18 +27,18 @@ public class Main extends Application {
 			Parent root = loader.load();
 			MenuController menuController = loader.getController();
 			menuController.setStage(stage);
+			menuController.setSoundManager(soundManager);
 			// Create the Scene with FXML root and set it on the stage
 			Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 			stage.setScene(scene);
 			stage.setTitle(TITLE);
 			stage.setResizable(false);
-            stage.show();
-        } catch (Exception e) {
+			stage.show();
+		} catch (Exception e) {
 			System.err.println("Error loading FXML file: " + e.getMessage());
 		}
-
-
 	}
+
 
 	public static void main(String[] args) {
 		configureLogging();
