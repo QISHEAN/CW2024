@@ -40,6 +40,7 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 		isShielded = false;
 		initializeMovePattern();
+//		hello
 	}
 
 	public int getHealth() {
