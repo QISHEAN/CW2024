@@ -34,6 +34,7 @@ public class MenuController {
     public Label titleLabel;
     public Button startButton;
     public Button exitButton;
+    public Button soundSettingsButton;
 
     private Stage stage;
     private SoundManager soundManager;
