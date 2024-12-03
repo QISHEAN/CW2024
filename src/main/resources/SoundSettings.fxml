@@ -22,14 +22,14 @@
         </padding>
         <!-- Music Volume -->
         <Label text="Music Volume:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <Slider fx:id="musicVolumeSlider" min="0.0" max="1.0" prefWidth="200" showTickLabels="true" showTickMarks="true"
+        <Slider fx:id="musicVolumeSlider" min="0.01" max="1.0" prefWidth="200" showTickLabels="true" showTickMarks="true"
                 majorTickUnit="0.25" minorTickCount="4" blockIncrement="0.1" GridPane.rowIndex="0"
                 GridPane.columnIndex="1"/>
         <Label fx:id="musicVolumeValue" text="100%" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
 
         <!-- Effects Volume -->
         <Label text="Effects Volume:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <Slider fx:id="effectsVolumeSlider" min="0.0" max="1.0" prefWidth="200" showTickLabels="true"
+        <Slider fx:id="effectsVolumeSlider" min="0.01" max="1.0" prefWidth="200" showTickLabels="true"
                 showTickMarks="true" majorTickUnit="0.25" minorTickCount="4" blockIncrement="0.1" GridPane.rowIndex="1"
                 GridPane.columnIndex="1"/>
         <Label fx:id="effectsVolumeValue" text="100%" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
