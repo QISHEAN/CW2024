@@ -1,6 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.managers.SoundManager;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -32,9 +36,14 @@ public class MenuController {
     public Button exitButton;
 
     private Stage stage;
+    private SoundManager soundManager;
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void setSoundManager(SoundManager soundManager) {
+        this.soundManager = soundManager;
     }
 
     // Called when Start Game button is clicked
@@ -42,10 +51,30 @@ public class MenuController {
     private void handleStartButton() {
         LOGGER.info("Start Game button clicked");
         try {
-            Controller gameController = new Controller(stage);
+            Controller gameController = new Controller(stage,soundManager);
             gameController.launchGame();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "An exception occurred while launching the game", e);
+        }
+    }
+    @FXML
+    private void openSoundSettings() {
+        LOGGER.info("Sound Settings button clicked");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SoundSettings.fxml"));
+            Parent root = loader.load();
+
+            SoundSettingsController controller = loader.getController();
+            controller.setSoundManager(soundManager);
+
+            Stage settingsStage = new Stage();
+            settingsStage.setTitle("Sound Settings");
+            settingsStage.setScene(new Scene(root));
+            settingsStage.initOwner(stage); // Sets the main stage as the owner
+            settingsStage.show();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error loading SoundSettings.fxml", e);
+            // Optionally, show an alert to the user
         }
     }
 
