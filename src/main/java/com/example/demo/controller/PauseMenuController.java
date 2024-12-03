@@ -18,6 +18,10 @@ public class PauseMenuController {
         this.mainMenuAction = mainMenuAction;
     }
 
+    public void setPauseRoot(Parent pauseRoot) {
+        this.pauseRoot = pauseRoot;
+    }
+
     public Parent getPauseRoot() {
         return pauseRoot;
     }
