@@ -13,15 +13,20 @@ public class UserPlane extends FighterPlane {
 	private static final double INITIAL_X_POSITION = 5.0;
 	private static final double INITIAL_Y_POSITION = 300.0;
 	private static final int IMAGE_HEIGHT = 150;
-	private static final int VERTICAL_VELOCITY = 8;
-	private static final int HORIZONTAL_VELOCITY = 8;
+	private static final int VERTICAL_VELOCITY = 12;
+	private static final int HORIZONTAL_VELOCITY = 12;
 	private int verticalVelocityMultiplier;
 	private int horizontalVelocityMultiplier;
 
+	private int killCount;
+	private final int initialHealth;
+
 	public UserPlane(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
+		this.initialHealth = initialHealth;
 		verticalVelocityMultiplier = 0;
 		horizontalVelocityMultiplier = 0;
+		killCount = 0;
 	}
 
 	@Override
@@ -46,11 +51,23 @@ public class UserPlane extends FighterPlane {
 		}
 	}
 
-
 	@Override
 	public void updateActor() {
 		updatePosition();
 		updateBoundingBox();
+	}
+
+	public void reset() {
+		setHealth(initialHealth);
+		setTranslateX(0);
+		setTranslateY(0);
+		resetKillCount();
+		stopVerticalMovement();
+		stopHorizontalMovement();
+	}
+
+	public void resetKillCount() {
+		this.killCount = 0;
 	}
 
 	@Override
@@ -66,40 +83,20 @@ public class UserPlane extends FighterPlane {
 		return horizontalVelocityMultiplier != 0;
 	}
 
-	public void moveUp() {
-		verticalVelocityMultiplier = -1;
-	}
+	public void moveUp() { verticalVelocityMultiplier = -1; }
+	public void moveDown() { verticalVelocityMultiplier = 1; }
+	public void moveLeft() { horizontalVelocityMultiplier = -1; }
+	public void moveRight() { horizontalVelocityMultiplier = 1; }
 
-	public void moveDown() {
-		verticalVelocityMultiplier = 1;
-
-	}
-
-	public void moveLeft() {
-		horizontalVelocityMultiplier = -1;
-
-	}
-
-	public void moveRight() {
-		horizontalVelocityMultiplier = 1;
-	}
-
-	public void stopVerticalMovement() {
-		verticalVelocityMultiplier = 0;
-	}
-
-	public void stopHorizontalMovement() {
-		horizontalVelocityMultiplier = 0;
-	}
-
+	public void stopVerticalMovement() { verticalVelocityMultiplier = 0; }
+	public void stopHorizontalMovement() { horizontalVelocityMultiplier = 0; }
 
 	@Override
 	public void updateBoundingBox() {
-		// Apply offsets and scaling factors specific to UserPlane
-		double offsetX = 10; // Adjust as needed
-		double offsetY = 50;  // Adjust as needed
-		double scaleWidth = 0.9;  // 80% of the image width
-		double scaleHeight = 0.3; // 90% of the image height
+		double offsetX = 10;
+		double offsetY = 50;
+		double scaleWidth = 0.9;
+		double scaleHeight = 0.3;
 
 		Bounds bounds = this.getBoundsInParent();
 		boundingBox.setX(bounds.getMinX() + offsetX);
@@ -108,6 +105,11 @@ public class UserPlane extends FighterPlane {
 		boundingBox.setHeight(bounds.getHeight() * scaleHeight);
 	}
 
+	public void incrementKillCount(int count) {
+		this.killCount += count;
+	}
+
+	public int getKillCount() {
+		return this.killCount;
+	}
 }
-
-
