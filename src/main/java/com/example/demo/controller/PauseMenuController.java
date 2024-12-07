@@ -2,9 +2,15 @@ package com.example.demo.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class PauseMenuController {
 
+    public Label pauseTitleLabel;
+    public Button resumeButton;
+    public Button restartButton;
+    public Button exitToMainMenuButton;
     @FXML
     private Parent pauseRoot; // The root node of the pause menu FXML
 
