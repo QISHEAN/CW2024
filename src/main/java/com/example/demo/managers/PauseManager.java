@@ -47,20 +47,23 @@ public class PauseManager {
     private void initializePauseMenu() {
         try {
             URL resource = getClass().getResource("/PauseMenu.fxml");
+            if (resource == null) {
+                logger.log(Level.SEVERE, "PauseMenu.fxml not found!");
+                return;
+            }
             FXMLLoader loader = new FXMLLoader(resource);
             Parent pauseRoot = loader.load();
             pauseMenuController = loader.getController();
             pauseMenuController.setActions(
                     this::resumeGame,
-                    restartAction,
-                    this::exitToMainMenu // Use method from PauseManager
+                    this::restart,
+                    this::exitToMainMenu
             );
             pauseMenuController.setPauseRoot(pauseRoot);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to initialize Pause Menu", e);
         }
     }
-
 
     public void initializePauseHandler() {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, pauseHandler);
@@ -78,44 +81,49 @@ public class PauseManager {
     };
 
     private void pauseGame() {
-        pauseAction.run(); // Call the pause action (e.g., stop timelines)
+        pauseAction.run();
         if (pauseMenuController != null) {
             root.getChildren().add(pauseMenuController.getPauseRoot());
         }
         isPaused = true;
+        logger.info("Game paused.");
     }
 
     private void resumeGame() {
-        resumeAction.run(); // Call the resume action (e.g., restart timelines)
-        if (pauseMenuController != null) {
+        resumeAction.run();
+        removePauseMenu();
+        isPaused = false;
+        root.requestFocus();
+        logger.info("Game resumed.");
+    }
+
+    private void removePauseMenu() {
+        if (pauseMenuController != null && pauseMenuController.getPauseRoot() != null) {
             root.getChildren().remove(pauseMenuController.getPauseRoot());
         }
-        isPaused = false;
-        root.requestFocus(); // Ensure the scene regains focus
     }
 
     public void exitToMainMenu() {
         Platform.runLater(() -> {
             try {
                 // Stop the game
-                pauseAction.run(); // Stop timelines, etc.
+                pauseAction.run();
+                soundManager.stopBackgroundMusic();
 
                 // Load the main menu
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuScreen.fxml"));
-                Parent root = loader.load();
+                Parent menuRoot = loader.load();
                 MenuController menuController = loader.getController();
                 menuController.setStage(stage);
-                menuController.setSoundManager(soundManager); // Pass SoundManager
+                menuController.setSoundManager(soundManager);
 
-                // Set the new scene
-                Scene scene = new Scene(root, 1300, 750);
-                stage.setScene(scene);
+                Scene menuScene = new Scene(menuRoot, 1300, 750);
+                stage.setScene(menuScene);
 
                 // Clean up pause menu
+                removePauseMenu();
                 isPaused = false;
-                if (pauseMenuController != null) {
-                    this.root.getChildren().remove(pauseMenuController.getPauseRoot());
-                }
+                logger.info("Exited to Main Menu.");
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Failed to exit to main menu", e);
             }
@@ -124,5 +132,15 @@ public class PauseManager {
 
     public boolean isPaused() {
         return isPaused;
+    }
+
+    private void restart() {
+        logger.info("Restarting the game via PauseMenu.");
+        if (restartAction != null) {
+            restartAction.run();
+        }
+        // After restart, remove pause menu if still present
+        removePauseMenu();
+        isPaused = false;
     }
 }
