@@ -19,10 +19,14 @@ public class EntityManager {
         this.root = root;
     }
 
-    public void addFriendlyUnit(ActiveActorDestructible unit) {
-        friendlyUnits.add(unit);
-        root.getChildren().add(unit);
-        root.getChildren().add(unit.getBoundingBox());
+    public void addFriendlyUnit(ActiveActorDestructible friendlyUnit) {
+        friendlyUnits.add(friendlyUnit);
+        if (!root.getChildren().contains(friendlyUnit)) {
+            root.getChildren().add(friendlyUnit);
+        }
+        if (!root.getChildren().contains(friendlyUnit.getBoundingBox())) {
+            root.getChildren().add(friendlyUnit.getBoundingBox());
+        }
     }
 
     public void addEnemyUnit(ActiveActorDestructible unit) {
@@ -73,8 +77,6 @@ public class EntityManager {
         }
     }
 
-    // EntityManager.java
-
     public int removeAllDestroyedActors() {
         int enemiesDestroyed = removeDestroyedActors(enemyUnits);
         removeDestroyedActors(friendlyUnits);
@@ -94,5 +96,27 @@ public class EntityManager {
         }
         actors.removeAll(destroyedActors);
         return destroyedActors.size();
+    }
+
+    public void clearEnemies() {
+        for (ActiveActorDestructible enemy : new ArrayList<>(enemyUnits)) {
+            root.getChildren().remove(enemy);
+            root.getChildren().remove(enemy.getBoundingBox());
+        }
+        enemyUnits.clear();
+    }
+
+    public void clearAllProjectiles() {
+        for (ActiveActorDestructible projectile : new ArrayList<>(userProjectiles)) {
+            root.getChildren().remove(projectile);
+            root.getChildren().remove(projectile.getBoundingBox());
+        }
+        userProjectiles.clear();
+
+        for (ActiveActorDestructible projectile : new ArrayList<>(enemyProjectiles)) {
+            root.getChildren().remove(projectile);
+            root.getChildren().remove(projectile.getBoundingBox());
+        }
+        enemyProjectiles.clear();
     }
 }
