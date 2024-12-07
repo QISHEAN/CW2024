@@ -4,6 +4,7 @@ import com.example.demo.actor.ActiveActorDestructible;
 import com.example.demo.actor.Boss;
 import com.example.demo.actor.FighterPlane;
 import com.example.demo.actor.UserPlane;
+import com.example.demo.levelview.EndlessLevelView;
 import com.example.demo.levelview.LevelView;
 import com.example.demo.managers.*;
 import javafx.animation.Timeline;
@@ -13,12 +14,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import com.example.demo.managers.SoundManager;
 import javafx.stage.Stage;
-
 import java.util.Objects;
+import java.util.logging.Logger;
 
-public abstract class LevelParent{
+public abstract class LevelParent {
 	protected final Stage stage;
-
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 50;
 	protected final double screenWidth;
@@ -27,24 +27,25 @@ public abstract class LevelParent{
 
 	protected final Group root;
 	protected final Timeline timeline;
-	private final UserPlane user;
+	protected final UserPlane user;
 	private final Scene scene;
 	protected final ImageView background;
 
-	private final LevelView levelView;
-
+	protected final LevelView levelView;
 	private final Boss boss;
 
 	private final CollisionManager collisionManager;
-	private final EntityManager entityManager;
+	protected final EntityManager entityManager;
 
 	private final GameInitializer gameInitializer;
 	private final InputManager inputManager;
-	private final NavigationManager navigationManager;
+	protected final NavigationManager navigationManager;
 
 	private final PauseManager pauseManager;
 
 	protected final SoundManager soundManager;
+
+	private static final Logger logger = Logger.getLogger(LevelParent.class.getName());
 
 	public LevelParent(String backgroundImageName, double screenWidth, double screenHeight, int playerInitialHealth, SoundManager soundManager, Stage stage) {
 		this.root = new Group();
@@ -66,20 +67,17 @@ public abstract class LevelParent{
 		this.entityManager = new EntityManager(root);
 		this.navigationManager = new NavigationManager();
 
-
 		this.gameInitializer = new GameInitializer(root, background, user, timeline, MILLISECOND_DELAY);
 		this.inputManager = new InputManager(user, scene, pauseManager, this::fireProjectile);
-
 		initializeGame();
 	}
-
 	protected void initializeFriendlyUnits() {
 		gameInitializer.initializeFriendlyUnits();
 	}
 
 	private void initializeGame() {
 		gameInitializer.initializeBackground();
-		initializeFriendlyUnits(); // Call the method that can be overridden
+		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
 		gameInitializer.initializeTimeline(this::updateScene);
 		inputManager.initializeInputHandling();
@@ -121,6 +119,7 @@ public abstract class LevelParent{
 		background.requestFocus();
 		timeline.play();
 		soundManager.playBackgroundMusic("/sounds/background.mp3");
+		logger.info("Game started.");
 	}
 
 	public void goToNextLevel(String levelName) {
@@ -146,23 +145,31 @@ public abstract class LevelParent{
 	}
 
 	protected void incrementKillCount(int count) {
-		// Default implementation does nothing
+		user.incrementKillCount(count);
+		updateLevelView();
+	}
+
+	protected int getUserKillCount() {
+		return user.getKillCount();
 	}
 
 	private void onPause() {
 		timeline.pause();
+		logger.info("Game paused.");
 	}
 
 	private void onResume() {
 		timeline.play();
 		background.requestFocus();
+		logger.info("Game resumed.");
 	}
 
 	public void restartLevel() {
 		navigationManager.notifyRestartLevel();
+		logger.info("RestartLevel called. Subclass should handle the restart.");
 	}
 
-	private void fireProjectile() {
+	protected void fireProjectile() {
 		ActiveActorDestructible projectile = user.fireProjectile();
 		entityManager.addUserProjectile(projectile);
 		soundManager.playSoundEffect("shoot");
@@ -179,6 +186,9 @@ public abstract class LevelParent{
 
 	protected void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
+		if (levelView instanceof EndlessLevelView) {
+			((EndlessLevelView) levelView).updateKillCount(getUserKillCount());
+		}
 		levelView.showShield();
 		if (boss != null) {
 			levelView.updateBossHealthText(boss.getHealth());
@@ -199,6 +209,7 @@ public abstract class LevelParent{
 		levelView.showWinImage();
 		soundManager.stopBackgroundMusic();
 		soundManager.playSoundEffect("win");
+		logger.info("Player won the game.");
 	}
 
 	protected void loseGame() {
@@ -207,6 +218,7 @@ public abstract class LevelParent{
 		soundManager.stopBackgroundMusic();
 		soundManager.playSoundEffect("game_over");
 	}
+
 	public void stopGame() {
 		if (timeline != null) {
 			timeline.stop();
@@ -235,5 +247,9 @@ public abstract class LevelParent{
 
 	protected boolean userIsDestroyed() {
 		return user.isDestroyed();
+	}
+
+	protected UserPlane getUser() {
+		return user;
 	}
 }
