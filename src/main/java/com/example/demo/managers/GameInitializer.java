@@ -25,7 +25,7 @@ public class GameInitializer {
 
     public void initializeBackground() {
         background.setFocusTraversable(true);
-        root.getChildren().add(0, background);
+        root.getChildren().addFirst(background);
     }
 
     public void initializeFriendlyUnits() {
