@@ -94,17 +94,13 @@ public class EndlessMode extends LevelParent {
         LeaderboardManager.addScore(score);
     }
 
-    @Override
-    public void restartLevel() {
-        navigationManager.notifyRestartLevel();
-        EndlessMode newGame = new EndlessMode(soundManager, stage);
-        stage.setScene(newGame.initializeScene());
-        newGame.startGame();
-
-        logger.info("Restarting the Endless Mode...");
-        // Stop the current game loop and animations
+    /**
+     * Cleans up the current game state. This method is called before creating a new EndlessMode instance.
+     * It ensures that no old UI elements, animations, or data remain from the previous session.
+     */
+    private void cleanupGameState() {
+        // Stop all timelines and animations
         stopGame();
-
 
         // Reset game variables
         totalEnemies = INITIAL_ENEMIES;
@@ -122,11 +118,21 @@ public class EndlessMode extends LevelParent {
         if (levelView instanceof EndlessLevelView) {
             ((EndlessLevelView) levelView).updateKillCount(0);
             ((EndlessLevelView) levelView).resetKillCountDisplay();
-            // If you have methods to reset hearts or shield, call them here
         }
+    }
 
-        // Restart the game loop
-        startGame();
-        logger.info("Game loop restarted.");
+    @Override
+    public void restartLevel() {
+        logger.info("Restarting the Endless Mode...");
+
+        // Clean up the current game state before starting a new instance
+        cleanupGameState();
+
+        // Create a fresh new instance of EndlessMode
+        EndlessMode newGame = new EndlessMode(soundManager, stage);
+        stage.setScene(newGame.initializeScene());
+        newGame.startGame();
+
+        logger.info("New EndlessMode instance started after cleanup.");
     }
 }
