@@ -1,8 +1,7 @@
 package com.example.demo.level;
 
 import com.example.demo.actor.EnemyPlane;
-import com.example.demo.levelview.LevelViewLevelTwo;
-import com.example.demo.levelview.LevelView; // Import LevelView
+import com.example.demo.levelview.LevelView; // Use the refactored LevelView class
 import com.example.demo.managers.SoundManager;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,15 +11,14 @@ public class LevelTwo extends LevelParent {
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background.jpg";
     private static final String NEXT_LEVEL = "com.example.demo.level.BossLevel";
     private static final int TOTAL_ENEMIES = 7; // Increased total enemies
-    private static final double ENEMY_SPAWN_PROBABILITY = .25; // Faster spawn probability
+    private static final double ENEMY_SPAWN_PROBABILITY = 0.25; // Faster spawn probability
     private static final int PLAYER_INITIAL_HEALTH = 5;
-
     private static final int TOTAL_KILLS_TO_WIN = 10; // Higher kill count target
+
     private int currentKills = 0; // Track current kill count
 
     public LevelTwo(double screenWidth, double screenHeight, SoundManager soundManager, Stage stage) {
-
-        super(BACKGROUND_IMAGE_NAME, screenWidth, screenHeight, PLAYER_INITIAL_HEALTH, soundManager,stage);
+        super(BACKGROUND_IMAGE_NAME, screenWidth, screenHeight, PLAYER_INITIAL_HEALTH, soundManager, stage);
     }
 
     @Override
@@ -34,6 +32,7 @@ public class LevelTwo extends LevelParent {
 
     @Override
     protected void initializeFriendlyUnits() {
+        // Initialize any friendly units if needed
     }
 
     public void incrementKillCount(int count) {
@@ -68,8 +67,13 @@ public class LevelTwo extends LevelParent {
 
     @Override
     protected LevelView instantiateLevelView() {
-        // Use a specialized LevelTwo view (if needed)
-        return new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
+        // Use the refactored LevelView with custom parameters for Level Two
+        return new LevelView(
+                getRoot(),
+                PLAYER_INITIAL_HEALTH,
+                true, // Enable warning label for this level
+                "Enemies are stronger! Stay alert!" // Warning message specific to Level Two
+        );
     }
 
     private boolean userHasReachedKillTarget() {

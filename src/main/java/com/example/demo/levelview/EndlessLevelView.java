@@ -20,7 +20,7 @@ public class EndlessLevelView extends LevelView {
     private final Text killCountText;
 
     public EndlessLevelView(Group root, int playerInitialHealth) {
-        super(root, playerInitialHealth);
+        super(root, playerInitialHealth,false,null);
         this.killCountText = new Text();
         initializeKillCountDisplay();
     }

@@ -5,12 +5,12 @@ import com.example.demo.ui.HeartDisplay;
 import com.example.demo.ui.ShieldImage;
 import com.example.demo.ui.WinImage;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.Pane;
-
 
 public class LevelView {
 
@@ -19,26 +19,26 @@ public class LevelView {
 	private static final int WIN_IMAGE_X_POSITION = 355;
 	private static final int WIN_IMAGE_Y_POSITION = 175;
 	private static final int LOSS_SCREEN_X_POSITION = 355;
-	private static final int LOSS_SCREEN_Y_POSISITION = 175;
-	private final ShieldImage shieldImage;
+	private static final int LOSS_SCREEN_Y_POSITION = 175;
+
 	protected final Group root;
+	private final HeartDisplay heartDisplay;
 	private final WinImage winImage;
 	private final GameOverImage gameOverImage;
-	private final HeartDisplay heartDisplay;
-
+	private final ShieldImage shieldImage;
 	private final Text bossHealthText;
 	private final Pane bossHealthPane;
-
 	private final Text killCountText;
-	private boolean killCountDisplayVisible;
 
-	public LevelView(Group root, int heartsToDisplay) {
+	private boolean killCountDisplayVisible;
+	private Label warningLabel; // Optional warning label for specific levels
+
+	public LevelView(Group root, int heartsToDisplay, boolean hasWarningLabel, String warningMessage) {
 		this.root = root;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
-		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSISITION);
+		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSITION);
 		this.shieldImage = new ShieldImage();
-
 
 		this.bossHealthText = new Text();
 		this.bossHealthText.setFill(Color.WHITE);
@@ -47,14 +47,27 @@ public class LevelView {
 		this.bossHealthText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		this.bossHealthPane = new Pane();
 		this.bossHealthPane.getChildren().add(bossHealthText);
+
 		this.killCountText = new Text();
 		this.killCountText.setFill(Color.WHITE);
-		this.killCountText.setX(1050); // Adjust position as needed
-		this.killCountText.setY(50); // Adjust position as needed
+		this.killCountText.setX(1050);
+		this.killCountText.setY(50);
 		this.killCountText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		this.killCountText.setText(""); // Initially empty
-		this.killCountDisplayVisible = false; // Initially not visible
+		this.killCountDisplayVisible = false;
 
+		if (hasWarningLabel) {
+			initializeWarningLabel(warningMessage);
+		}
+	}
+
+	private void initializeWarningLabel(String warningMessage) {
+		warningLabel = new Label(warningMessage);
+		warningLabel.setFont(new Font("Arial", 20));
+		warningLabel.setTextFill(Color.RED);
+		warningLabel.setLayoutX(300);
+		warningLabel.setLayoutY(20);
+		root.getChildren().add(warningLabel);
 	}
 
 	public void showHeartDisplay() {
@@ -62,9 +75,12 @@ public class LevelView {
 	}
 
 	public void showWinImage() {
-		root.getChildren().add(winImage);
-		winImage.showWinImage();
+		if (!root.getChildren().contains(winImage)) { // Ensure no duplicates
+			root.getChildren().add(winImage); // Add the win image to the root
+		}
+		winImage.showWinImage(); // Make the image visible
 	}
+
 
 	public void showGameOverImage() {
 		if (!root.getChildren().contains(gameOverImage)) {
@@ -79,7 +95,6 @@ public class LevelView {
 		}
 	}
 
-	// Method to show the kill count display
 	public void showKillCountDisplay() {
 		if (!killCountDisplayVisible) {
 			root.getChildren().add(killCountText);
@@ -87,24 +102,28 @@ public class LevelView {
 		}
 	}
 
-	// Method to update the kill count display
-	public void updateKillCountDisplay(int currentKills, int totalKills) {
-		killCountText.setText("Kills: " + currentKills + "/" + totalKills);
+	public void updateKillCountDisplay(int currentKills, int totalKillsToWin) {
+		killCountText.setText("Kills: " + currentKills + "/" + totalKillsToWin);
+
+		// Update warning message dynamically if applicable
+		if (warningLabel != null && currentKills > totalKillsToWin / 2) {
+			warningLabel.setText("You're halfway there! Keep going!");
+		}
 	}
 
 	public void showShield() {
 		shieldImage.showShield();
 	}
+
 	public void hideShield() {
 		shieldImage.hideShield();
 	}
+
 	public void updateBossHealthText(int bossHealth) {
 		bossHealthText.setText("Boss HP: " + bossHealth);
 	}
 
-	// Method to add the boss health display pane to the root
 	public void showBossHealthDisplay() {
 		root.getChildren().add(bossHealthPane);
 	}
-
 }
