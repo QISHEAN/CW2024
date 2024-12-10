@@ -43,12 +43,4 @@ public class TestEnemyPlane extends EnemyPlane {
         return new EnemyProjectile(projectileXPosition, projectileYPosition);
     }
 
-    /**
-     * Getter for horizontalVelocity to use in tests.
-     *
-     * @return The current horizontal velocity.
-     */
-    public double getHorizontalVelocityForTest() {
-        return super.horizontalVelocity;
-    }
 }
