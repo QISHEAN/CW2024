@@ -9,7 +9,7 @@ public class LevelViewBoss extends LevelView {
 	private final ShieldImage shieldImage;
 
 	public LevelViewBoss(Group root, int heartsToDisplay) {
-		super(root, heartsToDisplay);
+		super(root, heartsToDisplay,false,null);
 		this.root = root;
 		this.shieldImage = new ShieldImage();
 		addImagesToRoot();
