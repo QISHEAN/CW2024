@@ -134,7 +134,7 @@ public class PauseManager {
         return isPaused;
     }
 
-    private void restart() {
+    protected void restart() {
         logger.info("Restarting the game via PauseMenu.");
         if (restartAction != null) {
             restartAction.run();

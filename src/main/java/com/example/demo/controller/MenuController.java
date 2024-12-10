@@ -56,7 +56,7 @@ public class MenuController {
 
     // Called when Start Game button is clicked
     @FXML
-    private void handleStartButton() {
+    protected void handleStartButton() {
         LOGGER.info("Start Game button clicked");
         try {
             Controller gameController = new Controller(stage, soundManager);
@@ -68,7 +68,7 @@ public class MenuController {
 
     // Called when Endless Mode button is clicked
     @FXML
-    private void startEndlessMode() {
+    protected void startEndlessMode() {
         LOGGER.info("Endless Mode button clicked");
         try {
             EndlessController endlessController = new EndlessController(stage, soundManager);
@@ -80,7 +80,7 @@ public class MenuController {
 
     // Called when Leaderboard button is clicked
     @FXML
-    private void showLeaderboard() {
+    protected void showLeaderboard() {
         LOGGER.info("Leaderboard button clicked");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/leaderboard.fxml"));
@@ -99,7 +99,7 @@ public class MenuController {
 
     // Called when Sound Settings button is clicked
     @FXML
-    private void openSoundSettings() {
+    protected void openSoundSettings() {
         LOGGER.info("Sound Settings button clicked");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/SoundSettings.fxml"));
@@ -121,7 +121,7 @@ public class MenuController {
 
     // Called when Exit button is clicked
     @FXML
-    private void handleExitButton() {
+    protected void handleExitButton() {
         LOGGER.info("Exit button clicked");
         Platform.exit(); // Closes all stages and ends the JavaFX application.
     }

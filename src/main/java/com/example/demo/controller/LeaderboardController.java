@@ -19,7 +19,7 @@ public class LeaderboardController {
 
     public Button backButton;
     @FXML
-    private ListView<String> leaderboardListView;
+    protected ListView<String> leaderboardListView;
 
     private SoundManager soundManager;
 
@@ -55,7 +55,7 @@ public class LeaderboardController {
     }
 
     @FXML
-    private void backToMenu() {
+    protected void backToMenu() {
         try {
             URL menuFxml = getClass().getResource("/MenuScreen.fxml");
             if (menuFxml == null) {

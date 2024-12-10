@@ -74,16 +74,13 @@ public class SoundSettingsController {
     }
 
     @FXML
-    private void applyVolumeSettings() {
+    protected void applyVolumeSettings() {
         if (soundManager != null) {
             double musicVolume = musicVolumeSlider.getValue();
             double effectsVolume = effectsVolumeSlider.getValue();
 
             soundManager.setBackgroundMusicVolume(musicVolume);
             soundManager.setSoundEffectsVolume(effectsVolume);
-
-            // Optional: Provide feedback to the user
-            System.out.println("Volume settings applied: Music Volume = " + musicVolume + ", Effects Volume = " + effectsVolume);
         }
     }
 

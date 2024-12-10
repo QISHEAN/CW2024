@@ -88,7 +88,7 @@ public class Boss extends FighterPlane {
 		Collections.shuffle(movePattern);
 	}
 
-	private void updateShield() {
+	protected void updateShield() {
 		if (isShielded) {
 			framesWithShieldActivated++;
 			if (shieldExhausted()) {
@@ -134,7 +134,7 @@ public class Boss extends FighterPlane {
 		return framesWithShieldActivated == MAX_FRAMES_WITH_SHIELD;
 	}
 
-	private void activateShield() {
+	protected void activateShield() {
 		isShielded = true;
 	}
 

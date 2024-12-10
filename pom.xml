@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
@@ -28,19 +29,19 @@
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
       <version>${javafx.version}</version>
-      <classifier>win</classifier> <!-- Replace accordingly -->
+      <classifier>win</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-media</artifactId>
       <version>${javafx.version}</version>
-      <classifier>win</classifier> <!-- Replace accordingly -->
+      <classifier>win</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-swing</artifactId>
       <version>${javafx.version}</version>
-      <classifier>win</classifier> <!-- Replace accordingly -->
+      <classifier>win</classifier>
     </dependency>
 
     <!-- JUnit Jupiter (Includes API and Engine) -->
@@ -51,7 +52,14 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Mockito for Mocking Dependencies -->
+    <!-- Mockito Inline for Mocking Dependencies (Supports Static Mocks) -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-inline</artifactId>
+      <version>4.11.0</version>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
@@ -66,8 +74,13 @@
       <version>4.0.16-alpha</version>
       <scope>test</scope>
     </dependency>
-  </dependencies>
 
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>1.14.6</version> <!-- Latest version that supports Java 21 -->
+    </dependency>
+  </dependencies>
 
   <repositories>
     <!-- JitPack Repository for TestFX Alpha Versions -->
@@ -99,11 +112,18 @@
           <argLine>
             --add-opens com.example.demo/com.example.demo=ALL-UNNAMED
             --add-opens com.example.demo/com.example.demo.actor=ALL-UNNAMED
+            --add-opens com.example.demo/com.example.demo.controller=ALL-UNNAMED
             --add-opens com.example.demo/com.example.demo.level=ALL-UNNAMED
+            --add-opens com.example.demo/com.example.demo.levelview=ALL-UNNAMED
+            --add-opens com.example.demo/com.example.demo.managers=ALL-UNNAMED
             --add-opens javafx.graphics/javafx.scene=ALL-UNNAMED
             --add-opens javafx.graphics/com.sun.javafx.tk.quantum=ALL-UNNAMED
             --add-opens javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED
             --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+            --add-opens javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+            --add-opens javafx.base/com.sun.javafx.beans=ALL-UNNAMED
+            -XX:+EnableDynamicAgentLoading
+            -Djdk.instrument.traceUsage=false
           </argLine>
         </configuration>
       </plugin>
@@ -115,7 +135,6 @@
         <version>0.0.8</version>
         <executions>
           <execution>
-            <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
               <mainClass>com.example.demo.controller.Main</mainClass>

@@ -33,21 +33,21 @@ public class PauseMenuController {
     }
 
     @FXML
-    private void onResumeClicked() {
+    protected void onResumeClicked() {
         if (resumeAction != null) {
             resumeAction.run();
         }
     }
 
     @FXML
-    private void onRestartClicked() {
+    protected void onRestartClicked() {
         if (restartAction != null) {
             restartAction.run();
         }
     }
 
     @FXML
-    private void onExitToMainMenuClicked() {
+    protected void onExitToMainMenuClicked() {
         if (mainMenuAction != null) {
             mainMenuAction.run();
         }
