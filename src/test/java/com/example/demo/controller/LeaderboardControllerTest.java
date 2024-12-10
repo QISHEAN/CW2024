@@ -63,7 +63,7 @@ class LeaderboardControllerTest extends JavaFXInitializer {
         Platform.runLater(() -> {
             assertNotNull(leaderboardController.leaderboardListView, "Leaderboard ListView should not be null");
             assertEquals(5, leaderboardController.leaderboardListView.getItems().size(), "ListView should contain 5 scores");
-            assertEquals("Rank 1: 100", leaderboardController.leaderboardListView.getItems().get(0), "First score should be Rank 1: 100");
+            assertEquals("Rank 1: 100", leaderboardController.leaderboardListView.getItems().getFirst(), "First score should be Rank 1: 100");
         });
         waitForFXEvents();
     }
@@ -87,7 +87,7 @@ class LeaderboardControllerTest extends JavaFXInitializer {
         Platform.runLater(() -> {
             assertNotNull(leaderboardController.leaderboardListView, "Leaderboard ListView should not be null");
             assertEquals(1, leaderboardController.leaderboardListView.getItems().size(), "ListView should contain 1 item");
-            assertEquals("No scores yet.", leaderboardController.leaderboardListView.getItems().get(0), "The item should indicate no scores");
+            assertEquals("No scores yet.", leaderboardController.leaderboardListView.getItems().getFirst(), "The item should indicate no scores");
         });
         waitForFXEvents();
     }

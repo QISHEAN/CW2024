@@ -273,9 +273,7 @@ class EntityManagerTest extends JavaFXInitializer {
         if (!completed) {
             fail("Timeout waiting for JavaFX tasks to complete.");
         }
-        @SuppressWarnings("unchecked")
-        T returnValue = (T) result[0];
-        return returnValue;
+        return (T) result[0];
     }
 
     /**
