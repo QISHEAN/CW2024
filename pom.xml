@@ -80,6 +80,20 @@
       <artifactId>byte-buddy</artifactId>
       <version>1.14.6</version> <!-- Latest version that supports Java 21 -->
     </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.9.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>4.0.0</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <repositories>
@@ -117,6 +131,7 @@
             --add-opens com.example.demo/com.example.demo.levelview=ALL-UNNAMED
             --add-opens com.example.demo/com.example.demo.managers=ALL-UNNAMED
             --add-opens javafx.graphics/javafx.scene=ALL-UNNAMED
+            --add-opens java.base/java.lang=ALL-UNNAMED
             --add-opens javafx.graphics/com.sun.javafx.tk.quantum=ALL-UNNAMED
             --add-opens javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED
             --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED

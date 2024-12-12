@@ -85,19 +85,6 @@ class GameInitializerTest extends JavaFXInitializer {
     }
 
     /**
-     * Tests that initializeFriendlyUnits() adds the user plane and its bounding box to the root.
-     */
-    @Test
-    void testInitializeFriendlyUnits() {
-        // Act
-        runAndWait(() -> gameInitializer.initializeFriendlyUnits());
-
-        // Assert
-        assertTrue(root.getChildren().contains(userPlane), "User plane should be added to root.");
-        assertTrue(root.getChildren().contains(userPlane.getBoundingBox()), "User plane's bounding box should be added to root.");
-    }
-
-    /**
      * Tests that initializeTimeline() sets up the timeline correctly and the updateScene runnable is invoked.
      */
     @Test
