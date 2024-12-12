@@ -16,8 +16,8 @@ public class UserPlane extends FighterPlane {
 	private static final double INITIAL_X_POSITION = 5.0;
 	private static final double INITIAL_Y_POSITION = 300.0;
 	private static final int IMAGE_HEIGHT = 150;
-	private static final int VERTICAL_VELOCITY = 12;
-	private static final int HORIZONTAL_VELOCITY = 12;
+	private static final int VERTICAL_VELOCITY = 15;
+	private static final int HORIZONTAL_VELOCITY = 15;
 	private int verticalVelocityMultiplier;
 	private int horizontalVelocityMultiplier;
 
@@ -151,6 +151,7 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public void updateBoundingBox() {
+
 		double offsetX = 10;
 		double offsetY = 50;
 		double scaleWidth = 0.9;
