@@ -6,7 +6,7 @@ import javafx.geometry.Bounds;
 public class EnemyPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "enemyplane.png";
-	private static final int IMAGE_HEIGHT = 150;
+	private static final int IMAGE_HEIGHT = 120;
 	protected double horizontalVelocity;
 	private static final double PROJECTILE_X_POSITION_OFFSET = -100.0;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50.0;
@@ -40,7 +40,7 @@ public class EnemyPlane extends FighterPlane {
 	@Override
 	public void updateBoundingBox() {
 		double offsetX = 5;    // Adjust as needed
-		double offsetY = 45;   // Adjust as needed
+		double offsetY = 35;   // Adjust as needed
 		double scaleWidth = 0.9;
 		double scaleHeight = 0.4;
 
