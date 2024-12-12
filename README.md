@@ -225,30 +225,204 @@ Use the following Maven commands to build, test, package, and run the project.
 
 ### 3.1 Implemented and Working Properly
 1. **User Plane Movement**: Added left and right movement controls for the user plane.
+    - **Classes Involved**:
+        - `UserPlane` (actor)
+        - `InputManager` (manager)
+    - **Key Methods**:
+        - `UserPlane.moveLeft()`
+        - `UserPlane.moveRight()`
+        - `UserPlane.stopHorizontalMovement()`
+        - `InputManager.createKeyPressedHandler()`
+        - `InputManager.createKeyReleasedHandler()`
+
 2. **Main Menu**: Implemented a main menu that appears upon game startup.
+    - **Classes Involved**:
+        - `MenuController` (controller)
+    - **Key Methods**:
+        - `MenuController.handleStartButton()`
+        - `MenuController.startEndlessMode()`
+        - `MenuController.showLeaderboard()`
+        - `MenuController.openSoundSettings()`
+        - `MenuController.handleExitButton()`
+
 3. **Pause Menu**: Created a pause menu along with its handler for game interruption.
+    - **Classes Involved**:
+        - `PauseMenuController` (controller)
+        - `PauseManager` (manager)
+    - **Key Methods**:
+        - `PauseManager.pauseGame()`
+        - `PauseManager.resumeGame()`
+        - `PauseManager.exitToMainMenu()`
+        - `PauseMenuController.onResumeClicked()`
+        - `PauseMenuController.onRestartClicked()`
+        - `PauseMenuController.onExitToMainMenuClicked()`
+
 4. **Kill Count Display**: Added a kill count text to track the number of enemies defeated.
+    - **Classes Involved**:
+        - `EndlessLevelView` (levelview)
+        - `KillCountDisplay` (levelview)
+    - **Key Methods**:
+        - `EndlessLevelView.initializeKillCountDisplay()`
+        - `EndlessLevelView.updateKillCount(int killCount)`
+        - `KillCountDisplay.updateDisplayText()`
+
 5. **Visual and Audio Enhancements**: Changed background images and incorporated sound effects and background music.
-6. **Additional Level**: Added an extra level (Level 2 and change the original Level 2 to BossLevel) to increase game complexity.
+    - **Classes Involved**:
+        - `SoundManager` (manager)
+        - `GameOverImage`, `WinImage`, `HeartDisplay`, `ShieldImage` (ui)
+    - **Key Methods**:
+        - `SoundManager.playSoundEffect()`
+        - `SoundManager.playBackgroundMusic()`
+        - `SoundManager.setBackgroundMusicVolume()`
+
+6. **Additional Level**: Added an extra level (Level 2 and changed the original Level 2 to `BossLevel`) to increase game complexity.
+    - **Classes Involved**:
+        - `BossLevel` (level)
+        - `LevelTwo` (level)
+        - `LevelParent` (level)
+    - **Key Methods**:
+        - `BossLevel.initializeScene()`
+        - `BossLevel.startGame()`
+        - `BossLevel.updateLevelView()`
+        - `BossLevel.checkIfGameOver()`
+        - `LevelTwo.incrementKillCount()`
+        - `LevelTwo.initializeKillCountDisplay()`
+
 7. **Endless Mode and Leaderboard**: Implemented endless mode along with leaderboard mechanics to track high scores.
+    - **Classes Involved**:
+        - `EndlessController` (controller)
+        - `EndlessMode` (level)
+        - `LeaderboardController` (controller)
+        - `LeaderboardManager` (manager)
+    - **Key Methods**:
+        - `EndlessController.startEndlessMode()`
+        - `EndlessMode.instantiateLevelView()`
+        - `EndlessMode.spawnEnemyUnits()`
+        - `EndlessMode.incrementKillCount()`
+        - `EndlessMode.restartLevel()`
+        - `LeaderboardManager.addScore()`
+        - `LeaderboardManager.getTopScores()`
+        - `LeaderboardManager.saveScores()`
+        - `LeaderboardController.initialize()`
+        - `LeaderboardController.backToMenu()`
+
 8. **Game Controls**: Enabled users to restart, resume, and exit to the main menu at every level.
+    - **Classes Involved**:
+        - `PauseMenuController` (controller)
+        - `PauseManager` (manager)
+        - `NavigationManager` (manager)
+    - **Key Methods**:
+        - `PauseMenuController.onRestartClicked()`
+        - `PauseMenuController.onResumeClicked()`
+        - `PauseMenuController.onExitToMainMenuClicked()`
+        - `PauseManager.restartLevel()`
+        - `NavigationManager.notifyRestartLevel()`
+
 9. **Leaderboard Display**: Added a leaderboard that sorts and showcases the highest scores.
+    - **Classes Involved**:
+        - `LeaderboardController` (controller)
+        - `LeaderboardManager` (manager)
+    - **Key Methods**:
+        - `LeaderboardController.initialize()`
+        - `LeaderboardController.backToMenu()`
+        - `LeaderboardManager.addScore()`
+        - `LeaderboardManager.getTopScores()`
+
 10. **Sound Effects**: Included sound effects for projectiles, game win and loss events, and enemy planes when damaged by projectiles.
-11. **Boss Plane Health**: Added a health indicator for the boss plane.
+    - **Classes Involved**:
+        - `SoundManager` (manager)
+    - **Key Methods**:
+        - `SoundManager.playSoundEffect()`
+
+11. **Boss Plane Health**: Added a health text for the boss plane.
+    - **Classes Involved**:
+        - `BossLevel` (level)
+        - `LevelViewBoss` (levelview)
+    - **Key Methods**:
+        - `BossLevel.initializeScene()`
+        - `BossLevel.updateLevelView()`
+        - `BossLevel.checkIfGameOver()`
+        - `LevelViewBoss.showShield()`
+        - `LevelViewBoss.hideShield()`
+
 12. **Settings Page**: Implemented a settings page allowing users to adjust music and sound effects volume.
+    - **Classes Involved**:
+        - `SoundSettingsController` (controller)
+        - `SoundManager` (manager)
+    - **Key Methods**:
+        - `SoundSettingsController.initializeSliders()`
+        - `SoundSettingsController.addSliderListeners()`
+        - `SoundSettingsController.applyVolumeSettings()`
+
 13. **Warning Label**: Added a warning label in Level 2 to alert players of specific conditions or events.
+    - **Classes Involved**:
+        - `LevelTwo` (level)
+        - `LevelView` (levelview)
+    - **Key Methods**:
+        - `LevelTwo.incrementKillCount()`
+        - `EndlessLevelView.showWarningLabel()`
+
 14. **Enemy Penetration Handling**: Introduced a feature where enemy planes crossing the screen boundary reduce the player's health while ensuring the kill count remains unaffected, maintaining accurate gameplay statistics.
+    - **Classes Involved**:
+        - `CollisionManager` (manager)
+        - `UserPlane` (actor)
+    - **Key Methods**:
+        - `CollisionManager.handleEnemyPenetration()`
+        - `UserPlane.reduceHealth(int amount)`
+
 15. **Bounding Box Feature**: Integrated dynamic bounding boxes for all destructible actors to improve collision detection and handling, ensuring accurate hit detection and damage calculations.
+    - **Classes Involved**:
+        - `ActiveActorDestructible` (actor)
+        - `CollisionManager` (manager)
+    - **Key Methods**:
+        - `ActiveActorDestructible.getBoundingBox()`
+        - `ActiveActorDestructible.updateBoundingBox()`
+        - `CollisionManager.handlePlaneCollisions()`
+        - `CollisionManager.handleUserProjectileCollisions()`
+        - `CollisionManager.handleEnemyProjectileCollisions()`
 
 ### 3.2 Implemented but Not Working Properly
 1. **Pause Menu Glitch**: When the game is lost and the game over screen appears, pressing Esc to open the pause menu and then selecting "Resume" causes the plane, projectiles, and other elements in the level to briefly move before stopping, even though the game is already over.
 2. **Unlimited Projectiles**: Users can fire projectiles indefinitely without the need to reload, leading to potential balance issues.
-3. **Unlimited Projectiles**: The unlimited projectile feature causes the sound effects to stop playing when the fire button is held down continuously.
-
+3. **Projectile Sound Effects Issue**: The unlimited projectile feature causes the sound effects to stop playing when the fire button is held down continuously.
+4. **Sound Settings Mute Issue**: Unable to completely mute the sound using the sound settings sliders because setting the minimum value to `0` in the FXML causes warnings.
+   - **Solution**: I have adjusted the sliders' minimum values to `0.01`, allowing users to reduce the volume close to mute without triggering warnings.
+   
 ### 3.3 Not Implemented
 1. **Tutorial Section**: A tutorial to teach beginners how to play the game.
 2. **In-Game Power-Ups**: Implementation of power-ups that provide temporary advantages during gameplay.
 3. **Final Score Display**: Displaying the user's final score on the game over screen during endless mode.
+
+### 3.4 How to Fix Identified Issues
+
+1. **Pause Menu Glitch**
+    - **Validate Game State**: Ensure the game cannot resume if it's already in a game-over state.
+    - **Manage Timelines**: Stop all active game timelines when the game ends to prevent unintended movements.
+    - **Cleanup Pause Menu**: Disable or hide the pause menu upon triggering the game-over state to prevent further interactions.
+
+2. **Unlimited Projectiles**
+    - **Cooldown Timer**: Add a cooldown period between successive projectile firings to control the rate of fire.
+    - **Ammo System**: Implement an ammo counter that decreases with each shot and requires reloading after depletion.
+    - **UI Integration**: Display the current ammo count and cooldown status to inform players about their firing capabilities.
+
+### 3.5 How to Add Missing Features
+
+1. **Tutorial Section**
+    - **Create `TutorialLevel` Class**: Develop a simplified level that introduces basic controls and mechanics.
+    - **Add Instructional UI**: Use tooltips or dialog boxes to provide real-time guidance (e.g., "Press SPACE to shoot").
+    - **Include a Skip Option**: Add a "Skip Tutorial" button in the main menu for experienced players.
+
+2. **In-Game Power-Ups**
+    - **Develop `PowerUp` Class**: Define different types of power-ups with specific effects and durations.
+    - **Spawn Power-Ups**: Integrate power-up spawning logic in the `EntityManager` to appear at random intervals or after certain events.
+    - **Handle Collection and Effects**: Update the `CollisionManager` to detect power-up pickups and apply their effects to the player.
+    - **Display Active Power-Ups**: Show active power-ups and their remaining durations in the game UI.
+
+3. **Final Score Display**
+    - **Update `EndlessLevelView`**: Enhance the game-over screen to include the final score.
+    - **Integrate with Leaderboard**: Automatically save the final score to the leaderboard upon game over.
+    - **UI Enhancements**: Use `Text` elements to prominently display the final score alongside the game-over image.
+---
 
 ## 4.0 Refactoring Process
 
@@ -406,295 +580,262 @@ Use the following Maven commands to build, test, package, and run the project.
 |                 |                                                                            | 3. **File Path Retention**: Retained the correct resource path for the "You Win" image: `/com/example/demo/images/youwin.png`.                                     |
 |                 |                                                                            | 4. **No Visual Changes**: Maintained the same dimensions (`HEIGHT = 500`, `WIDTH = 600`) and layout positioning logic as the original class.                       |
 
+## 5.0 Summary
 
-### 4.3 Summary and Additional Notes of Refactoring Process
+### 5.1 Additional Features
 
-## 1. Modularization
-The codebase has been reorganized into structured packages for improved clarity and maintainability. The following packages were introduced:
-- **`controller`**: Manages game flow, menu interactions, and user controls.
-- **`level`**: Handles level-specific logic, transitions, and gameplay elements.
-- **`levelview`**: Manages UI components for individual levels, including dynamic visual feedback.
-- **`managers`**: Centralizes responsibilities for input, collisions, entities, navigation, sound, and game initialization.
-- **`projectiles`**: Defines projectile behavior for player and enemy entities.
-- **`ui`**: Manages reusable UI components such as game over and win screens.
+1. **Endless Mode and Leaderboard**
+    - **Description**: Introduced an endless mode with continuously increasing waves of enemies.
+    - **Leaderboard**: Implemented a leaderboard system to track and display high scores.
+    - **Classes Involved**:
+        - `EndlessController` (controller)
+        - `EndlessMode` (level)
+        - `LeaderboardController` (controller)
+        - `LeaderboardManager` (manager)
+    - **Key Methods**:
+        - `EndlessController.startEndlessMode()`
+        - `EndlessMode.instantiateLevelView()`
+        - `EndlessMode.spawnEnemyUnits()`
+        - `LeaderboardManager.addScore()`
+        - `LeaderboardManager.getTopScores()`
 
-This modular structure simplifies maintenance, enables efficient debugging, and facilitates scalability by isolating concerns.
+2. **Boss Level**
+    - **Description**: Developed a challenging boss level featuring a unique boss with shield mechanics and custom animations.
+    - **Classes Involved**:
+        - `BossLevel` (level)
+        - `LevelViewBoss` (levelview)
+    - **Key Methods**:
+        - `BossLevel.initializeScene()`
+        - `BossLevel.startGame()`
+        - `BossLevel.updateLevelView()`
+        - `BossLevel.checkIfGameOver()`
+        - `LevelViewBoss.showShield()`
+        - `LevelViewBoss.hideShield()`
+
+3. **Settings Page**
+    - **Description**: Created a settings page allowing users to adjust music and sound effects volume.
+    - **Classes Involved**:
+        - `SoundSettingsController` (controller)
+        - `SoundManager` (manager)
+    - **Key Methods**:
+        - `SoundSettingsController.initializeSliders()`
+        - `SoundSettingsController.addSliderListeners()`
+        - `SoundSettingsController.applyVolumeSettings()`
+
+4. **Warning Labels**
+    - **Description**: Added warning labels in Level 2 to alert players of specific conditions, such as increased enemy strength.
+    - **Classes Involved**:
+        - `LevelTwo` (level)
+        - `LevelView` (levelview)
+    - **Key Methods**:
+        - `LevelTwo.incrementKillCount()`
+        - `EndlessLevelView.showWarningLabel()`
+
+5. **Enhanced Collision Detection**
+    - **Description**: Integrated dynamic bounding boxes for all destructible actors to improve collision detection accuracy.
+    - **Classes Involved**:
+        - `ActiveActorDestructible` (actor)
+        - `CollisionManager` (manager)
+    - **Key Methods**:
+        - `ActiveActorDestructible.getBoundingBox()`
+        - `ActiveActorDestructible.updateBoundingBox()`
+        - `CollisionManager.handlePlaneCollisions()`
+        - `CollisionManager.handleUserProjectileCollisions()`
+        - `CollisionManager.handleEnemyProjectileCollisions()`
+
+6. **Pause Menu**
+    - **Description**: Implemented a pause menu that allows players to pause the game, resume gameplay, restart the current level, or exit to the main menu.
+    - **Classes Involved**:
+        - `PauseMenuController` (controller)
+        - `PauseManager` (manager)
+    - **Key Methods**:
+        - `PauseMenuController.onResumeClicked()`
+        - `PauseMenuController.onRestartClicked()`
+        - `PauseMenuController.onExitToMainMenuClicked()`
+        - `PauseManager.pauseGame()`
+        - `PauseManager.resumeGame()`
+        - `PauseManager.exitToMainMenu()`
+
+### 5.2 Refactoring
+
+1. **Package Organization**
+    - **Description**: Reorganized the project structure into specific packages (`actor`,`controller`, `level`, `levelview`, `manager`, `projectiles`, `ui`) to enhance code maintainability and readability.
+    - **Benefits**:
+        - Improved modularity.
+        - Easier navigation and management of classes.
+        - Enhanced scalability for future developments.
+
+2. **Sound Management Enhancement**
+    - **Description**: Centralized audio functionalities within the `SoundManager` class for consistent handling of sound effects and background music.
+    - **Key Changes**:
+        - Added methods like `playSoundEffect()`, `playBackgroundMusic()`, and `setBackgroundMusicVolume()`.
+        - Enabled dynamic and overlapping sound effects without interruption.
+
+3. **Collision Handling Optimization**
+    - **Description**: Enhanced collision detection mechanisms by integrating bounding boxes within destructible actors and delegating collision logic to the `CollisionManager`.
+    - **Benefits**:
+        - Increased accuracy in collision detection.
+        - Simplified interaction management between different game entities.
+
+4. **Game State Management**
+    - **Description**: Refactored game state transitions and pause/resume functionalities to ensure smooth and error-free gameplay, especially during critical states like game-over.
+    - **Key Changes**:
+        - Implemented state checks within `PauseManager` to prevent unintended game resumes.
+        - Ensured timelines are appropriately managed during state transitions.
+
+5. **FXML Integration for UI Design**
+    - **Description**: Utilized FXML to separate UI layout from application logic, enhancing code organization and maintainability.
+    - **Benefits**:
+        - Clear separation of concerns between UI and business logic.
+        - Easier to design and modify UI components using JavaFX Scene Builder.
+        - Improved readability and manageability of UI-related code.
+
+6. **Consolidation of `LevelViewLevelTwo` into `LevelView`**
+    - **Description**: Removed the `LevelViewLevelTwo` class and integrated its functionalities into the `LevelView` class by adding `showShield()` and `hideShield()` methods.
+    - **Solution**: Removed redundant methods and unused code to improve code readability and maintainability.
+
+7. **Fixed Shield Display in Boss Level**
+    - **Description**: The shield was not displaying correctly in the boss level.
+    - **Solution**: Moved the shield showing functionality to the `LevelBoss` class for better separation of concerns.
+
+8. **Refactored `LevelParent` Class**
+    - **Description**: The `LevelParent` class had multiple responsibilities, violating the single responsibility principle.
+    - **Solution**: Introduced manager classes to handle specific responsibilities like entity management, input handling, and collision detection.
+
+9. **Fixed Kill Count Issue with Collisions and Penetrations**
+    - **Issue**: The kill count was not updating correctly when enemies were destroyed, regardless of destruction cause (penetration, collision, and projectile kill).
+    - **Solution**: Updated `CollisionManager` to handle different destruction types. When an enemy plane penetrates the screen boundary without being destroyed by the user plane, it decreases the user's health without increasing the kill count.
+
+    - **Modified Classes**:
+
+      | **Class Name**     | **Key Methods**                                      |
+      |--------------------|------------------------------------------------------|
+      | `CollisionManager` | `handleCollisions()`, `handleBoundaryPenetrations()` |
+
+10. **Tested and Verified Refactored Codebase Functionality and Performance**
+    - **Issue**: Refactored code could introduce new bugs or performance issues.
+    - **Solution**: Performed extensive Java unit and integration testing using a test-driven development (TDD) approach to ensure the refactored codebase operates correctly and maintains optimal performance.
+
+### 5.3 Design Patterns Used
+
+1. **Model-View-Controller (MVC)**
+    - **Description**: Adopted the MVC architectural pattern to separate concerns within the application, enhancing code organization and scalability.
+    - **Components**:
+        - **Model**: Represents the game data and logic (e.g., `UserPlane`, `EnemyPlane`).
+        - **View**: Handles the UI elements (e.g., `EndlessLevelView`, `LevelViewBoss`).
+        - **Controller**: Manages user interactions and updates the model/view accordingly (e.g., `MenuController`, `PauseMenuController`).
+
+2. **Singleton Pattern**
+    - **Description**: Utilized the Singleton pattern for manager classes to ensure a single, globally accessible instance throughout the application.
+    - **Classes Implemented**:
+
+      | **Class Name**       | **Description**                                                                                                                 | **Key Methods**                                                                                         |
+      |----------------------|---------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+      | `SoundManager`       | Manages all sound-related functionalities, including playing sound effects and background music.                                | `getInstance()`, `playSoundEffect()`, `playBackgroundMusic()`                                           |
+      | `CollisionManager`   | Handles collision detection and resolution between game entities.                                                               | `getInstance()`, `handleCollisions()`                                                                   |
+      | `LeaderboardManager` | Manages the leaderboard, including adding, retrieving, and persisting player scores.                                            | `getInstance()`, `addScore()`, `getTopScores()`, `saveScores()`                                         |
+      | `EntityManager`      | Manages the lifecycle and interactions of game entities (friendly units, enemies, and projectiles).                             | `getInstance()`, `addEntity()`, `removeEntity()`                                                        |
+      | `GameInitializer`    | Handles the initialization of game components, setting up the background, adding friendly units, and configuring the game loop. | `getInstance()`, `initializeBackground()`, `initializeFriendlyUnits()`, `initializeTimeline()`          |
+      | `InputManager`       | Manages user input and keybindings, allowing the player to control the user plane's movements and actions.                      | `getInstance()`, `initializeInputHandling()`, `createKeyPressedHandler()`, `createKeyReleasedHandler()` |
+      | `NavigationManager`  | Facilitates communication between different levels and game components.                                                         | `getInstance()`, `notifyLevelChange()`, `notifyExitToMainMenu()`, `notifyRestartLevel()`                |
+      | `PauseManager`       | Manages the pause functionality in the game, including pausing/resuming the game and handling the pause menu.                   | `getInstance()`, `pauseGame()`, `resumeGame()`, `exitToMainMenu()`                                      |
+
+    - **Implementation Details**:
+        - **`SoundManager`**:
+            - **Method**: `getInstance()`
+            - **Purpose**: Provides a global point of access to the `SoundManager` instance.
+        - **`CollisionManager`**:
+            - **Method**: `getInstance()`
+            - **Purpose**: Ensures only one instance of `CollisionManager` exists to manage all collision-related logic.
+        - **`LeaderboardManager`**:
+            - **Method**: `getInstance()`
+            - **Purpose**: Maintains a single instance responsible for managing leaderboard data and operations.
+        - **`EntityManager`**:
+            - **Method**: `getInstance()`
+            - **Purpose**: Manages all game entities, ensuring centralized control over their lifecycle.
+        - **`GameInitializer`**:
+            - **Method**: `getInstance()`
+            - **Purpose**: Handles the initialization process of game components, ensuring consistent setup across levels.
+        - **`InputManager`**:
+            - **Method**: `getInstance()`
+            - **Purpose**: Centralizes input handling, ensuring consistent user interactions throughout the game.
+        - **`NavigationManager`**:
+            - **Method**: `getInstance()`
+            - **Purpose**: Manages navigation between different game states and levels.
+        - **`PauseManager`**:
+            - **Method**: `getInstance()`
+            - **Purpose**: Controls game pausing and resuming, ensuring a single point of management for pause-related functionalities.
+
+    - **Benefits**:
+        - Controlled access to shared resources.
+        - Prevented the creation of multiple conflicting instances.
+        - Enhanced consistency and reliability across the application.
+
+3. **Observer Pattern (Refactored to LevelListener Interface)**
+    - **Description**: Initially implemented using the Observer pattern, it was refactored to use a `LevelListener` interface to handle level-specific events, promoting a cleaner and more flexible event-handling mechanism.
+    - **Usage**:
+        - Facilitates communication between different game levels and the controller.
+        - Enables dynamic response to level transitions and user actions.
+
+4. **Factory Pattern (Potential Usage)**
+    - **Description**: Although not yet implemented, the structured creation of game entities like projectiles and enemy planes suggests the potential use of the Factory pattern to manage object instantiation systematically.
+    - **Benefits**:
+        - Centralized object creation.
+        - Enhanced flexibility in managing different types of game entities.
+
+### 5.4 Achievements
+
+1. **Successful Implementation of Endless Mode with Leaderboard**
+    - **Description**: Developed and integrated an endless gameplay mode that challenges players with continuous waves of enemies. Coupled with a dynamic leaderboard, it provides players with a platform to compete for high scores, significantly enhancing the game's replayability and engagement.
+    - **Impact**:
+        - Increased player retention through competitive elements.
+        - Enhanced game complexity and depth.
+
+2. **Development of a Comprehensive Boss Level**
+    - **Description**: Designed and implemented a challenging boss level featuring a unique boss with shield mechanics, custom animations, and specific win/lose conditions. This addition introduced a new layer of difficulty and excitement, offering players a formidable challenge and a sense of accomplishment upon victory.
+    - **Impact**:
+        - Elevated the overall game difficulty and player satisfaction.
+        - Showcased advanced game design and development capabilities.
+
+3. **Implementation of Sound Settings**
+    - **Description**: Created a comprehensive settings page that allows users to adjust the volume of music and sound effects, providing a personalized audio experience.
+    - **Impact**:
+        - Enhanced user experience through customizable audio options.
+        - Improved accessibility for players with varying audio preferences and requirements.
+
+4. **Implementation of Pause Menu**
+    - **Description**: Developed and integrated a pause menu feature that allows players to pause the game, resume gameplay, restart the current level, or exit to the main menu. This feature enhances the user experience by providing flexible control over the game state.
+    - **Impact**:
+        - Improved user experience by allowing players to manage game flow effectively.
+        - Enhanced accessibility and control, catering to player needs during gameplay.
 
 ---
 
-## 2. Enhanced Feature Set
-Several new features and improvements were introduced to enhance gameplay and user experience:
+## 6.0 Unexpected Problems
 
-### **2.1 User Interface Enhancements**
-- **Kill Count Display**: Dynamically tracks and displays the number of enemies defeated.
-- **Shield Image**: Displays the boss's shield status during gameplay.
-- **Warning Labels**: Alerts players to specific conditions or events.
+### 1. **Sound Settings Mute Issue**
+- **Issue**: Unable to completely mute the sound using the sound settings sliders because setting the minimum value to `0` in the FXML causes warnings.
+- **Solution**: Adjusted the sliders' minimum values to `0.01`, allowing users to reduce the volume close to mute without triggering warnings.
 
-### **2.2 Audio Integration**
-- **SoundManager**: Manages background music, sound effects, and real-time volume adjustments for immersive gameplay.
+### 2. **Integration Issues After Refactoring**
+- **Issue**: Refactoring to introduce new manager classes caused unexpected integration bugs between game levels and manager functionalities.
+- **Solution**:
+    - Conducted incremental refactoring with continuous testing to identify and resolve integration issues promptly.
+    - Utilized unit tests to ensure that each manager class interacted correctly with game levels.
+    - Collaborated with team members to review changes and maintain code consistency.
 
-### **2.3 Level Transitions and Flow**
-- **NavigationManager**: Streamlines level transitions and ensures smooth integration with menus.
-- **LevelListener**: Defines consistent interfaces for handling level-specific events (e.g., transitions, restarts).
+### 3. **Performance Degradation Due to Collision Handling Enhancements**
+- **Issue**: Optimizing collision detection mechanisms led to increased computational overhead, causing noticeable lag during intensive gameplay moments.
+- **Solution**:
+    - Optimized collision algorithms to reduce unnecessary calculations.
+    - Implemented spatial partitioning techniques to limit collision checks to nearby entities.
+    - Profiled the game to identify and address specific performance bottlenecks.
 
-### **2.4 Dynamic Gameplay**
-- **Endless Mode**: Adds replayability by introducing infinite enemy waves and a leaderboard to track high scores.
-- **Boss Mechanics**: Incorporates strategic depth with boss health tracking, shield mechanics, and custom animations.
-
-### **2.5 Code Simplification**
-- **Removed `LevelViewLevelTwo`**: Consolidated its functionality into the `LevelView` class to reduce redundancy and improve code maintainability.
-
----
-
-## 3. Improved Code Quality
-### **3.1 Null Safety**
-- Added `Objects.requireNonNull` to safeguard against potential runtime exceptions (e.g., invalid image paths).
-
-### **3.2 Bounding Boxes**
-- Introduced dynamic bounding boxes for improved collision detection of entities like planes and projectiles.
-
-### **3.3 Standardized Logging**
-- A custom logger with a unified format was implemented for easier debugging and event tracking.
-
-### **3.4 Reduced Coupling**
-- Centralized responsibilities into dedicated managers (e.g., `EntityManager`, `CollisionManager`, `InputManager`), reducing code duplication and improving maintainability.
+### 4. **UI Rendering Glitches After Consolidating Level Views**
+- **Issue**: Removing the `LevelViewLevelTwo` class and consolidating its functionalities into the `LevelView` class resulted in UI inconsistencies, such as the shield not displaying correctly in the boss level.
+- **Solution**:
+    - Moved the shield display methods (`showShield()`, `hideShield()`) to the `LevelBoss` class to ensure proper separation of concerns.
+    - Conducted thorough UI testing across all levels to identify and fix rendering issues.
+    - Adjusted FXML layouts and styles to maintain consistent UI behavior after consolidation.
 
 ---
-
-## 4. Improved Visuals and Gameplay
-### **4.1 Responsive UI**
-- Enhanced UI components such as health displays, shield indicators, and kill count trackers provide dynamic visual feedback.
-
-### **4.2 Custom Animations**
-- Refined gameplay elements like boss movement patterns, projectile velocities, and shield activation for smoother player experience.
-
-### **4.3 Level-Specific Enhancements**
-- Each level now includes tailored challenges and UI configurations to align with its unique gameplay mechanics.
-
----
-
-## 5. Scalability
-The introduction of reusable components (e.g., `LevelParent`, `LevelListener`, `LevelView`) ensures:
-- Easier addition of new levels, mechanics, or UI features.
-- Minimal changes required in the existing codebase for updates.
-
----
-
-## 6. Additional Notes
-
-### **6.1 Identified Issues**
-1. **Pause Menu Glitch**: When the game ends, resuming from the pause menu causes unintended behavior, such as brief movement of entities. Further debugging is required to synchronize game state and UI components.
-2. **Unlimited Projectiles**: Players can fire projectiles without restriction, potentially unbalancing gameplay. A reload or cool down mechanic is recommended.
-
-### **6.2 Missing Features**
-1. **Tutorial Section**: A tutorial for beginners would improve accessibility.
-2. **In-Game Power-Ups**: Temporary power-ups like shields or health boosts could add variety to gameplay.
-3. **Final Score Display**: Including a final score on the game over screen in endless mode would enhance engagement.
-
-### **6.3 How to Fix Identified Issues**
-
-#### **1. Pause Menu Glitch**
-- **Problem**: When the game ends, resuming from the pause menu causes entities (e.g., plane, projectiles) to briefly move before stopping.
-
-- **Fix**:
-    1. **Game State Validation**:
-        - Update the `PauseManager` to check the current game state (e.g., `isGameOver`) before allowing the game to resume.
-        - Add a conditional statement in the `resumeGame` method to ensure the game cannot be resumed if it has already ended.
-
-    2. **Timeline Management**:
-        - Ensure the game timeline is properly paused or stopped when the game ends.
-        - In the `LevelParent` or related base class:
-            - Stop all active timelines in the `gameOver` method to prevent further updates.
-            - Use `Platform.runLater` to synchronize UI updates and ensure thread safety.
-
-    3. **Pause Menu Cleanup**:
-        - Modify the `showGameOver` method to automatically hide or disable the pause menu when the game-over state is triggered.
-        - Ensure the pause menu is not accessible after the game ends to prevent further interaction.
-
-**Expected Outcome**:
-- The game properly handles the pause menu during the game-over state.
-- Players cannot resume gameplay after the game ends, ensuring smooth state transitions.
-- The pause menu is removed or disabled once the game enters the game-over state.
----
-
-#### **2. Unlimited Projectiles**
-- **Problem**: Players can fire projectiles without restriction, leading to balance issues.
-
-- **Fix**:
-    1. **Add a Cooldown Timer**:
-        - Implement a cooldown period between successive projectile firings to limit the rate of fire.
-        - Add a `boolean canFire` attribute in the `UserPlane` or `InputManager` class to track firing eligibility.
-        - Use a `Timeline` or `Timer` to reset `canFire` after a predefined interval.
-
-       **Key Methods**:
-        - `fireProjectile`: Checks the `canFire` state before firing a projectile.
-        - `startCooldown`: Starts a cooldown timer to reset the `canFire` state.
-
-    2. **Ammo System**:
-        - Introduce an ammo counter in the `UserPlane` class that decrements with each fired projectile.
-        - Add logic to prevent firing when ammo is depleted.
-        - Provide a reload mechanism that replenishes ammo after a delay or upon user action (e.g., pressing a reload button).
-
-       **Key Methods**:
-        - `fireProjectile`: Decrements the ammo count on each successful shot.
-        - `reload`: Refills the ammo counter and optionally displays a progress indicator in the UI.
-
-    3. **UI Integration**:
-        - Display the remaining ammo count on the screen using a `Text` element.
-        - Add a visual or sound cue to indicate when ammo is low or when reloading is in progress.
-
-**Expected Outcome**:
-- Players can only fire projectiles at a controlled rate, ensuring balanced gameplay.
-- The addition of an ammo system introduces strategic elements, requiring players to manage resources during combat.
-- The user interface clearly communicates ammo status and cooldown states, enhancing player feedback.
-
-### **3 Addressing Projectile Sound Effects Issue**
-
-**Problem**: The unlimited projectile feature causes the sound effects to stop playing when the fire button is held down continuously.
-
-**Fix**:
-1. **Modify the SoundManager**:
-    - Ensure that each projectile sound effect is handled by a separate instance of the `MediaPlayer`.
-    - Create new `MediaPlayer` instances dynamically for each projectile sound to avoid overlapping or cutting off ongoing sound effects.
-
-   **Key Methods**:
-    - **`playProjectileSound`**: Creates and plays a new `MediaPlayer` instance for each projectile sound.
-    - **`disposeMediaPlayer`**: Cleans up `MediaPlayer` resources once the sound effect completes playback.
-
-2. **Add a Cooldown Mechanism**:
-    - Limit the firing rate of projectiles using a cooldown timer, reducing the frequency of sound effect triggers.
-    - This indirectly ensures the audio system has enough time to process and play each sound effect properly.
-
-   **Key Methods**:
-    - **`startCooldown`**: Implements a timer to reset the ability to fire projectiles.
-    - **`fireProjectile`**: Checks the cooldown state before firing a projectile and triggering its sound effect.
-
-3. **Avoid Sound Overlap**:
-    - Use a queue to manage sound effects, ensuring that new sounds do not interrupt ongoing playback.
-    - Allow queued sound effects to play sequentially once the previous sound completes.
-
-   **Key Methods**:
-    - **`queueProjectileSound`**: Adds new sounds to a queue when multiple sounds are triggered.
-    - **`playNextSound`**: Plays the next sound in the queue after the current sound finishes.
-
-4. **Volume Control**:
-    - Dynamically adjust the volume of projectile sound effects based on the current firing rate.
-    - Ensure consistent volume levels across all instances of projectile sound effects.
-
-   **Key Methods**:
-    - **`setSoundEffectsVolume`**: Adjusts the volume of all active sound effects dynamically.
-
-**Expected Outcome**:
-- Each projectile sound effect plays without interruptions, even when the fire button is held continuously.
-- The sound system avoids overlapping or suppressed sound effects, maintaining immersive and clear audio feedback.
-- Players experience consistent and polished gameplay audio without glitches caused by rapid projectile firing.
-
----
-
-# Missing Features Implementation Guide
-
-## **6.4 How to Add Missing Features**
-
-### **1. Tutorial Section**
-
-**Steps**:
-1. **Create a `TutorialLevel` class**:
-    - Extend the `LevelParent` class to inherit core level functionality.
-    - Introduce simplified gameplay mechanics to teach basic controls like:
-        - Moving the plane using arrow keys.
-        - Shooting projectiles using the SPACE key.
-        - Avoiding obstacles or enemies.
-
-2. **Add instructional tooltips or dialog boxes**:
-    - Use UI elements to provide real-time guidance, such as:
-        - "Press SPACE to shoot."
-        - "Use arrow keys to move."
-        - "Avoid enemy planes to survive."
-
-3. **Introduce simplified enemy interactions**:
-    - Add stationary or slow-moving enemies to allow players to practice aiming and shooting.
-    - Include visual cues or markers to highlight targets.
-
-4. **Add a "Skip Tutorial" button**:
-    - Modify the `MenuController` to include a "Tutorial" button on the main menu.
-    - Add functionality to skip the tutorial and proceed directly to the main game levels for experienced players.
-
-5. **UI Integration**:
-    - Display instructions prominently on the screen during the tutorial.
-    - Add a "Quit Tutorial" button to return to the main menu if the player chooses to exit early.
-
-**Expected Outcome**:
-- The tutorial provides new players with an accessible introduction to the game's controls and mechanics.
-- Players can practice without time pressure or overwhelming challenges.
-- Experienced players have the option to skip the tutorial and start the main game directly.
----
-
-### **2. In-Game Power-Ups**
-
-**Steps**:
-1. **Create a `PowerUp` class**:
-    - Define attributes for `type` (e.g., shield, health boost, ammo refill) and `duration` (for time-limited effects).
-    - Use this class to represent collectible power-ups in the game.
-
-2. **Modify the `EntityManager`**:
-    - Add a method to spawn power-ups at random intervals or after specific events (e.g., defeating an enemy).
-    - Example methods:
-        - `spawnPowerUp(String type, int duration, double x, double y)`: Spawns a new power-up and adds it to the game.
-
-3. **Update `CollisionManager`**:
-    - Detect collisions between the user plane and power-ups.
-    - Example methods:
-        - `handlePowerUpCollisions(UserPlane userPlane, List<PowerUp> powerUps, Group root)`: Handles interactions when the user collects a power-up.
-
-4. **Add logic in the `UserPlane` class**:
-    - Activate the power-up effects based on their type.
-    - Example methods:
-        - `activatePowerUp(String type)`: Activates the corresponding power-up effect.
-        - `enableShield(int duration)`: Temporarily enables a shield.
-        - `restoreHealth(int amount)`: Restores a portion of health.
-        - `refillAmmo()`: Refills the player’s ammunition.
-
-5. **Display active power-ups in the UI**:
-    - Add visual indicators to show active power-ups and their remaining durations.
-    - Example methods:
-        - `displayActivePowerUp(String type, int duration)`: Updates the UI to display the active power-up status.
-
-### **Expected Outcome**
-- **Power-ups** will enhance gameplay by providing temporary advantages such as immunity to damage, health restoration, or extra ammo.
-- **UI indicators** will help players track active power-ups and their durations.
-- **Dynamic spawning** will make gameplay more engaging and reward player performance.
----
-
-#### **3. Final Score Display**
-
-**Steps**:
-1. **Modify the `EndlessLevelView` class**:
-    - Enhance the game-over screen to include a final score display for better player feedback.
-
-2. **Update the `LeaderboardManager` class**:
-    - Add a method to format the final score for display purposes.
-    - Example method:
-        - `getFormattedFinalScore(int score)`:
-            - Formats and returns the final score as a string in the format: `"Final Score: [score]"`.
-
-3. **Enhance the `showGameOverImage` method**:
-    - Update this method in the `LevelView` or `EndlessLevelView` class to display the final score along with the game-over image.
-    - Include a visual representation of the final score using UI elements like `Text`.
-
-4. **Integrate the final score with the leaderboard**:
-    - Save the player's final score to the leaderboard by calling the `LeaderboardManager.addScore(score)` method during the game-over sequence.
-
-**Expected Outcome**:
-- Players can view their final score prominently on the game-over screen.
-- The score is automatically saved to the leaderboard, enhancing competitiveness and replayability.
-
-**Key Methods Used**:
-- `EndlessLevelView.showGameOverImage()`:
-    - Displays the final score and the game-over image on the screen.
-- `LeaderboardManager.addScore(int score)`:
-    - Saves the player's score to the leaderboard for future reference.
-- `LeaderboardManager.getFormattedFinalScore(int score)`:
-    - Formats the score for consistent display.
-
-This approach improves user experience by providing clear feedback on performance and integrating the score with the leaderboard for competitive tracking.
-
