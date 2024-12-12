@@ -243,6 +243,7 @@ Use the following Maven commands to build, test, package, and run the project.
 ### 3.2 Implemented but Not Working Properly
 1. **Pause Menu Glitch**: When the game is lost and the game over screen appears, pressing Esc to open the pause menu and then selecting "Resume" causes the plane, projectiles, and other elements in the level to briefly move before stopping, even though the game is already over.
 2. **Unlimited Projectiles**: Users can fire projectiles indefinitely without the need to reload, leading to potential balance issues.
+3. **Unlimited Projectiles**: The unlimited projectile feature causes the sound effects to stop playing when the fire button is held down continuously.
 
 ### 3.3 Not Implemented
 1. **Tutorial Section**: A tutorial to teach beginners how to play the game.
@@ -546,6 +547,48 @@ The introduction of reusable components (e.g., `LevelParent`, `LevelListener`, `
 - Players can only fire projectiles at a controlled rate, ensuring balanced gameplay.
 - The addition of an ammo system introduces strategic elements, requiring players to manage resources during combat.
 - The user interface clearly communicates ammo status and cooldown states, enhancing player feedback.
+
+### **3 Addressing Projectile Sound Effects Issue**
+
+**Problem**: The unlimited projectile feature causes the sound effects to stop playing when the fire button is held down continuously.
+
+**Fix**:
+1. **Modify the SoundManager**:
+    - Ensure that each projectile sound effect is handled by a separate instance of the `MediaPlayer`.
+    - Create new `MediaPlayer` instances dynamically for each projectile sound to avoid overlapping or cutting off ongoing sound effects.
+
+   **Key Methods**:
+    - **`playProjectileSound`**: Creates and plays a new `MediaPlayer` instance for each projectile sound.
+    - **`disposeMediaPlayer`**: Cleans up `MediaPlayer` resources once the sound effect completes playback.
+
+2. **Add a Cooldown Mechanism**:
+    - Limit the firing rate of projectiles using a cooldown timer, reducing the frequency of sound effect triggers.
+    - This indirectly ensures the audio system has enough time to process and play each sound effect properly.
+
+   **Key Methods**:
+    - **`startCooldown`**: Implements a timer to reset the ability to fire projectiles.
+    - **`fireProjectile`**: Checks the cooldown state before firing a projectile and triggering its sound effect.
+
+3. **Avoid Sound Overlap**:
+    - Use a queue to manage sound effects, ensuring that new sounds do not interrupt ongoing playback.
+    - Allow queued sound effects to play sequentially once the previous sound completes.
+
+   **Key Methods**:
+    - **`queueProjectileSound`**: Adds new sounds to a queue when multiple sounds are triggered.
+    - **`playNextSound`**: Plays the next sound in the queue after the current sound finishes.
+
+4. **Volume Control**:
+    - Dynamically adjust the volume of projectile sound effects based on the current firing rate.
+    - Ensure consistent volume levels across all instances of projectile sound effects.
+
+   **Key Methods**:
+    - **`setSoundEffectsVolume`**: Adjusts the volume of all active sound effects dynamically.
+
+**Expected Outcome**:
+- Each projectile sound effect plays without interruptions, even when the fire button is held continuously.
+- The sound system avoids overlapping or suppressed sound effects, maintaining immersive and clear audio feedback.
+- Players experience consistent and polished gameplay audio without glitches caused by rapid projectile firing.
+
 ---
 
 # Missing Features Implementation Guide

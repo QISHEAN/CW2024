@@ -5,8 +5,13 @@ import javafx.geometry.Bounds;
 
 import java.util.*;
 
+/**
+ * The Boss class represents a boss character in the game. It extends FighterPlane
+ * and includes unique features like shield activation, randomized movement patterns, and projectile firing.
+ */
 public class Boss extends FighterPlane {
 
+	// Constants defining the boss's behavior, appearance, and gameplay attributes.
 	private static final String IMAGE_NAME = "bossplane.png";
 	private static final double INITIAL_X_POSITION = 1000.0;
 	private static final double INITIAL_Y_POSITION = 400;
@@ -30,7 +35,9 @@ public class Boss extends FighterPlane {
 
 	private int currentHealth;
 
-
+	/**
+	 * Constructor to initialize the boss with its default attributes and behaviors.
+	 */
 	public Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		currentHealth = HEALTH;
@@ -42,10 +49,19 @@ public class Boss extends FighterPlane {
 		initializeMovePattern();
 	}
 
+	/**
+	 * Returns the current health of the boss.
+	 *
+	 * @return the current health value.
+	 */
 	public int getHealth() {
 		return currentHealth;
 	}
 
+	/**
+	 * Updates the position of the boss based on the current move in its pattern.
+	 * Prevents the boss from moving out of defined bounds.
+	 */
 	@Override
 	public void updatePosition() {
 		double initialTranslateY = getTranslateY();
@@ -56,17 +72,29 @@ public class Boss extends FighterPlane {
 		}
 	}
 
+	/**
+	 * Updates the boss's state, including position and shield status.
+	 */
 	@Override
 	public void updateActor() {
 		updatePosition();
 		updateShield();
 	}
 
+	/**
+	 * Fires a projectile if the boss decides to fire in the current frame.
+	 *
+	 * @return a new BossProjectile instance if firing, otherwise null.
+	 */
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
 	}
 
+	/**
+	 * Handles the boss taking damage. If the shield is active, no damage is applied.
+	 * If the boss's health reaches zero, it is destroyed.
+	 */
 	@Override
 	public void takeDamage() {
 		if (!isShielded) {
@@ -79,6 +107,10 @@ public class Boss extends FighterPlane {
 		}
 	}
 
+	/**
+	 * Initializes the boss's movement pattern with a mix of vertical and stationary moves.
+	 * The pattern is shuffled for unpredictability.
+	 */
 	private void initializeMovePattern() {
 		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
 			movePattern.add(VERTICAL_VELOCITY);
@@ -88,6 +120,9 @@ public class Boss extends FighterPlane {
 		Collections.shuffle(movePattern);
 	}
 
+	/**
+	 * Updates the shield's status. Activates or deactivates the shield based on probability and duration.
+	 */
 	protected void updateShield() {
 		if (isShielded) {
 			framesWithShieldActivated++;
@@ -99,7 +134,12 @@ public class Boss extends FighterPlane {
 		}
 	}
 
-
+	/**
+	 * Determines the next move in the boss's movement pattern.
+	 * Ensures moves do not repeat excessively before switching.
+	 *
+	 * @return the next move value.
+	 */
 	private int getNextMove() {
 		int currentMove = movePattern.get(indexOfCurrentMove);
 		consecutiveMovesInSameDirection++;
@@ -114,41 +154,76 @@ public class Boss extends FighterPlane {
 		return currentMove;
 	}
 
-
+	/**
+	 * Determines whether the boss fires a projectile in the current frame based on a probability.
+	 *
+	 * @return true if the boss fires, false otherwise.
+	 */
 	private boolean bossFiresInCurrentFrame() {
 		return Math.random() < BOSS_FIRE_RATE;
 	}
 
+	/**
+	 * Calculates the initial position for the boss's projectiles.
+	 *
+	 * @return the Y-coordinate for the projectile's spawn point.
+	 */
 	private double getProjectileInitialPosition() {
 		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 	}
 
+	/**
+	 * Checks whether the boss's shield is active.
+	 *
+	 * @return true if the shield is active, false otherwise.
+	 */
 	public boolean getIsShield(){
 		return isShielded;
 	}
+
+	/**
+	 * Determines whether the shield should be activated based on a probability.
+	 *
+	 * @return true if the shield should be activated, false otherwise.
+	 */
 	private boolean shieldShouldBeActivated() {
 		return Math.random() < BOSS_SHIELD_PROBABILITY;
 	}
 
+	/**
+	 * Checks if the shield duration has been exhausted.
+	 *
+	 * @return true if the shield duration is complete, false otherwise.
+	 */
 	private boolean shieldExhausted() {
 		return framesWithShieldActivated == MAX_FRAMES_WITH_SHIELD;
 	}
 
+	/**
+	 * Activates the boss's shield, making it immune to damage.
+	 */
 	protected void activateShield() {
 		isShielded = true;
 	}
 
+	/**
+	 * Deactivates the boss's shield, allowing it to take damage again.
+	 */
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
 	}
 
+	/**
+	 * Updates the bounding box of the boss for collision detection.
+	 * Adjusts the bounding box dimensions and offsets for better accuracy.
+	 */
 	@Override
 	public void updateBoundingBox() {
-		double offsetX = 50;  // Adjust as needed
-		double offsetY = 100;  // Adjust as needed
-		double scaleWidth =  0.9;   // Adjust as needed
-		double scaleHeight = 0.3;  // Adjust as needed
+		double offsetX = 50;  // Horizontal offset for bounding box.
+		double offsetY = 100; // Vertical offset for bounding box.
+		double scaleWidth = 0.9;  // Scaling factor for width.
+		double scaleHeight = 0.3; // Scaling factor for height.
 
 		Bounds bounds = this.getBoundsInParent();
 		boundingBox.setX(bounds.getMinX() + offsetX);

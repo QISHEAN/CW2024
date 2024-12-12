@@ -17,19 +17,34 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Manages the pause functionality of the game, including the pause menu and related actions.
+ * Handles pausing, resuming, restarting, and navigating back to the main menu.
+ */
 public class PauseManager {
     private static final Logger logger = Logger.getLogger(PauseManager.class.getName());
 
-    private final Scene scene;
-    private final Group root;
-    private final Stage stage;
-    private final SoundManager soundManager;
-    private final Runnable pauseAction;
-    private final Runnable resumeAction;
-    private final Runnable restartAction;
-    private PauseMenuController pauseMenuController;
-    private boolean isPaused = false;
+    private final Scene scene; // Scene to attach the pause key handler.
+    private final Group root; // Root group to manage game elements.
+    private final Stage stage; // Main game stage.
+    private final SoundManager soundManager; // Manager for handling sound.
+    private final Runnable pauseAction; // Action to execute when pausing the game.
+    private final Runnable resumeAction; // Action to execute when resuming the game.
+    private final Runnable restartAction; // Action to execute when restarting the game.
+    private PauseMenuController pauseMenuController; // Controller for the pause menu.
+    private boolean isPaused = false; // Tracks the pause state of the game.
 
+    /**
+     * Constructor to initialize the `PauseManager`.
+     *
+     * @param scene          The game scene to attach input handling.
+     * @param root           The root group for managing game elements.
+     * @param stage          The main stage of the game.
+     * @param soundManager   The sound manager for controlling background music and sound effects.
+     * @param pauseAction    Action to execute when pausing the game.
+     * @param resumeAction   Action to execute when resuming the game.
+     * @param restartAction  Action to execute when restarting the game.
+     */
     public PauseManager(Scene scene, Group root, Stage stage, SoundManager soundManager,
                         Runnable pauseAction, Runnable resumeAction, Runnable restartAction) {
         this.scene = scene;
@@ -44,6 +59,9 @@ public class PauseManager {
         initializePauseHandler();
     }
 
+    /**
+     * Initializes the pause menu by loading it from an FXML file and setting its actions.
+     */
     private void initializePauseMenu() {
         try {
             URL resource = getClass().getResource("/PauseMenu.fxml");
@@ -55,9 +73,9 @@ public class PauseManager {
             Parent pauseRoot = loader.load();
             pauseMenuController = loader.getController();
             pauseMenuController.setActions(
-                    this::resumeGame,
-                    this::restart,
-                    this::exitToMainMenu
+                    this::resumeGame, // Resume action.
+                    this::restart, // Restart action.
+                    this::exitToMainMenu // Exit to main menu action.
             );
             pauseMenuController.setPauseRoot(pauseRoot);
         } catch (IOException e) {
@@ -65,52 +83,69 @@ public class PauseManager {
         }
     }
 
+    /**
+     * Attaches the pause handler to the scene, allowing the ESC key to toggle the pause menu.
+     */
     public void initializePauseHandler() {
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, pauseHandler);
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, pauseHandler); // Attach the pause handler.
     }
 
+    /**
+     * Toggles the game's pause state when the ESC key is pressed.
+     */
     private final EventHandler<KeyEvent> pauseHandler = e -> {
         if (e.getCode() == KeyCode.ESCAPE) {
-            e.consume(); // Prevent the event from propagating
+            e.consume(); // Prevent the event from propagating.
             if (isPaused) {
-                resumeGame();
+                resumeGame(); // Resume the game if currently paused.
             } else {
-                pauseGame();
+                pauseGame(); // Pause the game if not currently paused.
             }
         }
     };
 
+    /**
+     * Pauses the game by executing the pause action and displaying the pause menu.
+     */
     private void pauseGame() {
-        pauseAction.run();
+        pauseAction.run(); // Execute the custom pause action.
         if (pauseMenuController != null) {
-            root.getChildren().add(pauseMenuController.getPauseRoot());
+            root.getChildren().add(pauseMenuController.getPauseRoot()); // Display the pause menu.
         }
         isPaused = true;
         logger.info("Game paused.");
     }
 
+    /**
+     * Resumes the game by executing the resume action and removing the pause menu.
+     */
     private void resumeGame() {
-        resumeAction.run();
-        removePauseMenu();
+        resumeAction.run(); // Execute the custom resume action.
+        removePauseMenu(); // Remove the pause menu from the scene.
         isPaused = false;
-        root.requestFocus();
+        root.requestFocus(); // Return focus to the game.
         logger.info("Game resumed.");
     }
 
+    /**
+     * Removes the pause menu from the root group if it is present.
+     */
     private void removePauseMenu() {
         if (pauseMenuController != null && pauseMenuController.getPauseRoot() != null) {
-            root.getChildren().remove(pauseMenuController.getPauseRoot());
+            root.getChildren().remove(pauseMenuController.getPauseRoot()); // Remove the pause menu.
         }
     }
 
+    /**
+     * Exits the game to the main menu.
+     * Stops the game, switches to the main menu scene, and cleans up the pause menu.
+     */
     public void exitToMainMenu() {
         Platform.runLater(() -> {
             try {
-                // Stop the game
-                pauseAction.run();
-                soundManager.stopBackgroundMusic();
+                pauseAction.run(); // Stop the game.
+                soundManager.stopBackgroundMusic(); // Stop the background music.
 
-                // Load the main menu
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/MenuScreen.fxml"));
                 Parent menuRoot = loader.load();
                 MenuController menuController = loader.getController();
@@ -120,8 +155,7 @@ public class PauseManager {
                 Scene menuScene = new Scene(menuRoot, 1300, 750);
                 stage.setScene(menuScene);
 
-                // Clean up pause menu
-                removePauseMenu();
+                removePauseMenu(); // Clean up the pause menu.
                 isPaused = false;
                 logger.info("Exited to Main Menu.");
             } catch (IOException e) {
@@ -130,17 +164,24 @@ public class PauseManager {
         });
     }
 
+    /**
+     * Checks if the game is currently paused.
+     *
+     * @return True if the game is paused, false otherwise.
+     */
     public boolean isPaused() {
         return isPaused;
     }
 
+    /**
+     * Restarts the game by executing the restart action and removing the pause menu.
+     */
     protected void restart() {
         logger.info("Restarting the game via PauseMenu.");
         if (restartAction != null) {
-            restartAction.run();
+            restartAction.run(); // Execute the custom restart action.
         }
-        // After restart, remove pause menu if still present
-        removePauseMenu();
+        removePauseMenu(); // Remove the pause menu after restarting.
         isPaused = false;
     }
 }
