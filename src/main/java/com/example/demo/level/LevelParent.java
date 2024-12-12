@@ -201,7 +201,6 @@ public abstract class LevelParent {
 	}
 
 	private void updateKillCount() {
-		// Implement kill count update logic if needed
 	}
 
 	protected void winGame() {

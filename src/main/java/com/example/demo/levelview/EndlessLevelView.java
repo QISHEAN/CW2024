@@ -51,7 +51,6 @@ public class EndlessLevelView extends LevelView {
     @Override
     public void showHeartDisplay() {
         super.showHeartDisplay();
-        // Additional UI setup if needed
     }
 
     /**
