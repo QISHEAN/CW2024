@@ -24,27 +24,21 @@ public class EntityManager {
         if (!root.getChildren().contains(friendlyUnit)) {
             root.getChildren().add(friendlyUnit);
         }
-        if (!root.getChildren().contains(friendlyUnit.getBoundingBox())) {
-            root.getChildren().add(friendlyUnit.getBoundingBox());
-        }
     }
 
     public void addEnemyUnit(ActiveActorDestructible unit) {
         enemyUnits.add(unit);
         root.getChildren().add(unit);
-        root.getChildren().add(unit.getBoundingBox());
     }
 
     public void addUserProjectile(ActiveActorDestructible projectile) {
         userProjectiles.add(projectile);
         root.getChildren().add(projectile);
-        root.getChildren().add(projectile.getBoundingBox());
     }
 
     public void addEnemyProjectile(ActiveActorDestructible projectile) {
         enemyProjectiles.add(projectile);
         root.getChildren().add(projectile);
-        root.getChildren().add(projectile.getBoundingBox());
     }
 
     public List<ActiveActorDestructible> getFriendlyUnits() {

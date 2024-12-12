@@ -30,7 +30,6 @@ public class GameInitializer {
 
     public void initializeFriendlyUnits() {
         root.getChildren().add(user);
-        root.getChildren().add(user.getBoundingBox());
     }
 
     public void initializeTimeline(Runnable updateScene) {
