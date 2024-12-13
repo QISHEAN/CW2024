@@ -164,11 +164,8 @@
     java -jar target/CW2024-1.0-SNAPSHOT.jar
     ```
 
-# Common Build Commands
+## **2.3 Common Build Commands**
 
-Use the following Maven commands to build, test, package, and run the project.
-
----
 **1. Clean Build Files**
 - Removes all previously generated build files:
     ```bash
