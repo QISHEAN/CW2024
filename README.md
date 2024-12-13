@@ -690,7 +690,7 @@
     - **Modified Classes**:
 
       | **Class Name**     | **Key Methods**                                      |
-            |--------------------|------------------------------------------------------|
+      |--------------------|------------------------------------------------------|
       | `CollisionManager` | `handleCollisions()`, `handleBoundaryPenetrations()` |
 
 10. **Tested and Verified Refactored Codebase Functionality and Performance**
@@ -699,7 +699,7 @@
 - **Implemented Testing**:
 
   | **Test Class**         | **Key Methods**                                                                                                                                |
-    |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+  |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
   | `MainTest`             | `testApplicationLaunch()`, `testMultipleStageLaunch()`                                                                                         |
   | `CollisionManagerTest` | `testHandlePlaneCollisions()`, `testHandleUserProjectileCollisions()`, `testHandleEnemyProjectileCollisions()`, `testHandleEnemyPenetration()` |
 ---
@@ -717,7 +717,7 @@
     - **Classes Implemented**:
 
       | **Class Name**       | **Description**                                                                                                                 | **Key Methods**                                                                                         |
-            |----------------------|---------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+      |----------------------|---------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
       | `SoundManager`       | Manages all sound-related functionalities, including playing sound effects and background music.                                | `getInstance()`, `playSoundEffect()`, `playBackgroundMusic()`                                           |
       | `CollisionManager`   | Handles collision detection and resolution between game entities.                                                               | `getInstance()`, `handleCollisions()`                                                                   |
       | `LeaderboardManager` | Manages the leaderboard, including adding, retrieving, and persisting player scores.                                            | `getInstance()`, `addScore()`, `getTopScores()`, `saveScores()`                                         |
