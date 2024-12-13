@@ -145,11 +145,8 @@
 4. Alternatively, set up a launch configuration to run the project directly:
     - Go to the **Run and Debug** panel → **Create a Launch Configuration** → Configure it for Maven.
 
----
 
-## **Compile and Run the Application**
-
-### **Compile the Project**
+3. Compile the Project
 - Clean and compile the project using Maven:
     ```bash
     mvn clean compile
