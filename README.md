@@ -145,7 +145,6 @@
 4. Alternatively, set up a launch configuration to run the project directly:
     - Go to the **Run and Debug** panel → **Create a Launch Configuration** → Configure it for Maven.
 
-
 #### 3. Compile the Project
 - Clean and compile the project using Maven:
     ```bash
@@ -409,7 +408,7 @@
 
 ### 4.1 New Java Classes
 
-# controller
+- controller
 
 | **Class Name**                | **Description**                                                                                                                                                                                                                                                                                               |
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -426,7 +425,7 @@
 | **`SoundSettingsController`** | This class provides a user interface for adjusting music and sound effects volume. It synchronizes slider values with the `SoundManager` for real-time updates.                                                                                                                                               |
 | **Key Methods**:              | - **`initializeSliders()`**: Initializes slider values to match current volume settings. <br> - **`addSliderListeners()`**: Adds listeners to sliders for dynamic volume adjustments. <br> - **`applyVolumeSettings()`**: Saves and applies updated volume settings.                                          |
 
-# level
+- level
 
 | **Class Name**      | **Description**                                                                                                                                                                                                                                                                                                                                                                    |
 |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -437,7 +436,7 @@
 | **`LevelListener`** | This interface defines the contract for handling level-specific events such as changing to the next level, restarting the current level, or exiting to the main menu. It is used to ensure consistent communication between different game levels and the controller.                                                                                                              |
 | **Key Methods**:    | - **`onLevelChange(String nextLevelClassName)`**: Handles transitions to the next level. <br> - **`exitToMainMenu()`**: Exits the current level and navigates to the main menu. <br> - **`restartLevel()`**: Restarts the current level.                                                                                                                                           |
 
-# levelview
+- levelview
 
 | **Class Name**         | **Description**                                                                                                                                                                                    | **Key Methods**                                                                                                                                                                                                                                                                                                                                                                                     |
 |------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -445,7 +444,7 @@
 | **`KillCountDisplay`** | Provides a reusable component for displaying the kill count on the screen. It dynamically updates the score display and allows for customization of its position and style.                        | - **`updateDisplayText()`**: Updates the displayed kill count. <br> - **`getDisplayText()`**: Returns the formatted kill count text. <br> - **Constructor**: Accepts position and initial kill count to initialize the display.                                                                                                                                                                     |
 | **`LevelViewBoss`**    | Handles the visual elements specific to the boss level. This includes a shield image for the boss, which can be shown or hidden dynamically, and integrates all elements into the level's root UI. | - **`showShield()`**: Displays the shield image when the boss's shield is active. <br> - **`hideShield()`**: Hides the shield image when the shield is inactive. <br> - **Constructor**: Initializes the visual components and adds the shield image to the level's root.                                                                                                                           |
 
-# manager
+- manager
 
 | **Class Name**           | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 |--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
