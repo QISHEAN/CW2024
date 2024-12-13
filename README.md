@@ -44,7 +44,7 @@
    java --version
 
 
-## **2. Install JavaFX SDK**
+### **2. Install JavaFX SDK**
 1. Download JavaFX SDK 21 from [OpenJFX](https://openjfx.io/).
 2. Extract it to a preferred location.
 3. Optionally, add it to your PATH (although Maven will handle dependencies automatically):
@@ -60,7 +60,7 @@
 
 ---
 
-## **3. Install Git**
+###  **3. Install Git**
 1. Install Git for your operating system:
     - **Windows**: Download and install from [Git for Windows](https://git-scm.com/).
     - **macOS**: Install via Homebrew:
@@ -81,7 +81,7 @@
    git --version
 
 
-## **4. Install Apache Maven**
+### **4. Install Apache Maven**
 1. Download Apache Maven from the [Maven Official Site](https://maven.apache.org/download.cgi).
 2. Add Maven to your system PATH:
     - **Windows**:
@@ -94,19 +94,10 @@
       source ~/.bash_profile
       ```
 
----
-
-### Verify Maven Installation
+3.  Verify Maven Installation
 - To confirm Maven is installed correctly, run the following command:
     ```bash
     mvn --version
-
-
-# Project Setup Guide
-
-Follow the steps below to set up and run the project on your local environment.
-
----
 
 ## **2.2 Project Setup**
 
