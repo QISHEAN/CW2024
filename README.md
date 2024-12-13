@@ -204,7 +204,7 @@
 ## 3.0 Features
 
 ### 3.1 Implemented and Working Properly
-1. **User Plane Movement**: Added left and right movement controls for the user plane.
+1. **User Plane Movement**: Implemented left and right movement controls for the user plane, enhancing gameplay responsiveness.
     - **Classes Involved**:
         - `UserPlane` (actor)
         - `InputManager` (manager)
