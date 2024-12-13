@@ -99,15 +99,14 @@
 
 ## **2.2 Project Setup**
 
-### Clone the Repository
 1. Clone the project repository:
    ```bash
    git clone https://github.com/QISHEAN/CW2024.git
    cd CW2024
 
-## **IDE Setup**
+2. IDE setup
 
-### **Eclipse**
+- Eclipse
 1. Open Eclipse and import the project as a Maven project:
     - Go to **File** → **Import** → **Existing Maven Projects**.
     - Select the project folder and click **Finish**.
@@ -117,9 +116,8 @@
         - Go to the **Libraries** tab.
         - Click **Add External JARs...** and select the JavaFX JAR files from your JavaFX SDK.
 
----
 
-### **IntelliJ IDEA**
+- IntelliJ IDEA
 1. Open IntelliJ IDEA and import the project as a Maven project:
     - Select **Open** from the IntelliJ start screen and choose the project folder.
     - IntelliJ will detect the `pom.xml` and set up the Maven configuration.
@@ -131,9 +129,9 @@
     - Click **Reload All Maven Projects** to load all dependencies.
 4. Wait for Maven to sync and ensure there are no errors in the dependencies.
 
----
 
-### **VS Code**
+
+- VS Code
 1. Install the required extensions from the Visual Studio Code Marketplace:
     - **Java Extension Pack**.
     - **JavaFX Extension** (optional for JavaFX development).
