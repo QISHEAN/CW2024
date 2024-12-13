@@ -384,7 +384,7 @@
     - **Cooldown Timer**: Add a cooldown period between successive projectile firings to control the rate of fire.
     - **Ammo System**: Implement an ammo counter that decreases with each shot and requires reloading after depletion.
     - **UI Integration**: Display the current ammo count and cooldown status to inform players about their firing capabilities.
-
+---
 ### 3.5 How to Add Missing Features
 
 1. **Tutorial Section**
@@ -464,7 +464,7 @@
 | **Key Methods**:         | - **`pauseGame()`**: Pauses the game and displays the pause menu. <br> - **`resumeGame()`**: Resumes the game and removes the pause menu. <br> - **`exitToMainMenu()`**: Navigates to the main menu from the pause menu.                                                                                                                                                                                                                                           |
 | **`SoundManager`**       | This class manages the game's audio, including playing sound effects and background music. It supports volume adjustments, looping background music, and dynamically loading sound resources.                                                                                                                                                                                                                                                                      |
 | **Key Methods**:         | - **`playSoundEffect()`**: Plays a specified sound effect. <br> - **`playBackgroundMusic()`**: Plays looping background music. <br> - **`setBackgroundMusicVolume()`**: Adjusts the volume of background music.                                                                                                                                                                                                                                                    |
-
+---
 ### 4.2 Modified Java Classes
 
 - actor
@@ -635,7 +635,7 @@
         - `PauseManager.pauseGame()`
         - `PauseManager.resumeGame()`
         - `PauseManager.exitToMainMenu()`
-
+---
 ### 5.2 Refactoring
 
 1. **Package Organization**
@@ -701,7 +701,7 @@
   |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
   | `MainTest`             | `testApplicationLaunch()`, `testMultipleStageLaunch()`                                                                                         |
   | `CollisionManagerTest` | `testHandlePlaneCollisions()`, `testHandleUserProjectileCollisions()`, `testHandleEnemyProjectileCollisions()`, `testHandleEnemyPenetration()` |
-
+---
 ### 5.3 Design Patterns Used
 
 1. **Model-View-Controller (MVC)**
@@ -768,7 +768,7 @@
     - **Benefits**:
         - Centralized object creation.
         - Enhanced flexibility in managing different types of game entities.
-
+---
 ### 5.4 Achievements
 
 1. **Successful Implementation of Endless Mode with Leaderboard**
@@ -796,7 +796,6 @@
         - Enhanced accessibility and control, catering to player needs during gameplay.
 
 ---
-
 ### 6.0 Unexpected Problems
 1. **Integration Issues After Refactoring**
    - **Issue**: Refactoring to introduce new manager classes caused unexpected integration bugs between game levels and manager functionalities.
