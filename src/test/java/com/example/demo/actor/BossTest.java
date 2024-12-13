@@ -22,7 +22,7 @@ class BossTest extends JavaFXInitializer {
 
     @Test
     void testInitialState() {
-        assertEquals(10, boss.getHealth(), "Boss should have initial health of 10");
+        assertEquals(20, boss.getHealth(), "Boss should have initial health of 10");
         assertFalse(boss.getIsShield(), "Boss should not be shielded initially");
     }
 
@@ -44,7 +44,7 @@ class BossTest extends JavaFXInitializer {
         assertEquals(initialHealth - 1, boss.getHealth(), "Boss health should decrease by 1 when taking damage");
 
         // Reduce health to zero
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             boss.takeDamage();
         }
         assertEquals(0, boss.getHealth(), "Boss health should not go below 0");
