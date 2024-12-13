@@ -58,8 +58,6 @@
       source ~/.bash_profile
       ```
 
----
-
 ###  **3. Install Git**
 1. Install Git for your operating system:
     - **Windows**: Download and install from [Git for Windows](https://git-scm.com/).
