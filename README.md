@@ -360,21 +360,21 @@
         - `CollisionManager.handlePlaneCollisions()`
         - `CollisionManager.handleUserProjectileCollisions()`
         - `CollisionManager.handleEnemyProjectileCollisions()`
-
+---
 ### 3.2 Implemented but Not Working Properly
 1. **Pause Menu Glitch**: When the game is lost and the game over screen appears, pressing Esc to open the pause menu and then selecting "Resume" causes the plane, projectiles, and other elements in the level to briefly move before stopping, even though the game is already over.
 2. **Unlimited Projectiles**: Users can fire projectiles indefinitely without the need to reload, leading to potential balance issues.
 3. **Projectile Sound Effects Issue**: The unlimited projectile feature causes the sound effects to stop playing when the fire button is held down continuously.
 4. **Sound Settings Mute Issue**: Unable to completely mute the sound using the sound settings sliders because setting the minimum value to `0` in the FXML causes warnings.
    - **Solution**: I have adjusted the sliders' minimum values to `0.01`, allowing users to reduce the volume close to mute without triggering warnings.
-   
+---  
 ### 3.3 Not Implemented
 1. **Tutorial Section**: A tutorial to teach beginners how to play the game.
 2. **In-Game Power-Ups**: Implementation of power-ups that provide temporary advantages during gameplay.
 3. **Final Score Display**: Displaying the user's final score on the game over screen during endless mode.
 
+---
 ### 3.4 How to Fix Identified Issues
-
 1. **Pause Menu Glitch**
     - **Validate Game State**: Ensure the game cannot resume if it's already in a game-over state.
     - **Manage Timelines**: Stop all active game timelines when the game ends to prevent unintended movements.
