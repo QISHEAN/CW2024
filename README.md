@@ -146,7 +146,7 @@
     - Go to the **Run and Debug** panel → **Create a Launch Configuration** → Configure it for Maven.
 
 
-3. Compile the Project
+#### 3. Compile the Project
 - Clean and compile the project using Maven:
     ```bash
     mvn clean compile
