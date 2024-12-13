@@ -366,7 +366,7 @@
 2. **Unlimited Projectiles**: Users can fire projectiles indefinitely without the need to reload, leading to potential balance issues.
 3. **Projectile Sound Effects Issue**: The unlimited projectile feature causes the sound effects to stop playing when the fire button is held down continuously.
 4. **Sound Settings Mute Issue**: Unable to completely mute the sound using the sound settings sliders because setting the minimum value to `0` in the FXML causes warnings.
-   - **Solution**: I have adjusted the sliders' minimum values to `0.01`, allowing users to reduce the volume close to mute without triggering warnings.
+    - **Solution**: I have adjusted the sliders' minimum values to `0.01`, allowing users to reduce the volume close to mute without triggering warnings.
 ---  
 ### 3.3 Not Implemented
 1. **Tutorial Section**: A tutorial to teach beginners how to play the game.
@@ -622,6 +622,7 @@
         - `CollisionManager.handlePlaneCollisions()`
         - `CollisionManager.handleUserProjectileCollisions()`
         - `CollisionManager.handleEnemyProjectileCollisions()`
+    - **Related Refactoring**: Supported by **Collision Handling Optimization** in Refactoring to ensure efficient and accurate collision management within the codebase.
 
 6. **Pause Menu**
     - **Description**: Implemented a pause menu that allows players to pause the game, resume gameplay, restart the current level, or exit to the main menu.
@@ -689,7 +690,7 @@
     - **Modified Classes**:
 
       | **Class Name**     | **Key Methods**                                      |
-      |--------------------|------------------------------------------------------|
+            |--------------------|------------------------------------------------------|
       | `CollisionManager` | `handleCollisions()`, `handleBoundaryPenetrations()` |
 
 10. **Tested and Verified Refactored Codebase Functionality and Performance**
@@ -698,7 +699,7 @@
 - **Implemented Testing**:
 
   | **Test Class**         | **Key Methods**                                                                                                                                |
-  |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+    |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
   | `MainTest`             | `testApplicationLaunch()`, `testMultipleStageLaunch()`                                                                                         |
   | `CollisionManagerTest` | `testHandlePlaneCollisions()`, `testHandleUserProjectileCollisions()`, `testHandleEnemyProjectileCollisions()`, `testHandleEnemyPenetration()` |
 ---
@@ -716,7 +717,7 @@
     - **Classes Implemented**:
 
       | **Class Name**       | **Description**                                                                                                                 | **Key Methods**                                                                                         |
-      |----------------------|---------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+            |----------------------|---------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
       | `SoundManager`       | Manages all sound-related functionalities, including playing sound effects and background music.                                | `getInstance()`, `playSoundEffect()`, `playBackgroundMusic()`                                           |
       | `CollisionManager`   | Handles collision detection and resolution between game entities.                                                               | `getInstance()`, `handleCollisions()`                                                                   |
       | `LeaderboardManager` | Manages the leaderboard, including adding, retrieving, and persisting player scores.                                            | `getInstance()`, `addScore()`, `getTopScores()`, `saveScores()`                                         |
@@ -798,24 +799,24 @@
 ---
 ### 6.0 Unexpected Problems
 1. **Integration Issues After Refactoring**
-   - **Issue**: Refactoring to introduce new manager classes caused unexpected integration bugs between game levels and manager functionalities.
-   - **Solution**:
-       - Conducted incremental refactoring with continuous testing to identify and resolve integration issues promptly.
-       - Utilized unit tests to ensure that each manager class interacted correctly with game levels.
-       - Collaborated with team members to review changes and maintain code consistency.
+    - **Issue**: Refactoring to introduce new manager classes caused unexpected integration bugs between game levels and manager functionalities.
+    - **Solution**:
+        - Conducted incremental refactoring with continuous testing to identify and resolve integration issues promptly.
+        - Utilized unit tests to ensure that each manager class interacted correctly with game levels.
+        - Collaborated with team members to review changes and maintain code consistency.
 
 2. **Performance Degradation Due to Collision Handling Enhancements**
-   - **Issue**: Optimizing collision detection mechanisms led to increased computational overhead, causing noticeable lag during intensive gameplay moments.
-   - **Solution**:
-       - Optimized collision algorithms to reduce unnecessary calculations.
-       - Implemented spatial partitioning techniques to limit collision checks to nearby entities.
-       - Profiled the game to identify and address specific performance bottlenecks.
+    - **Issue**: Optimizing collision detection mechanisms led to increased computational overhead, causing noticeable lag during intensive gameplay moments.
+    - **Solution**:
+        - Optimized collision algorithms to reduce unnecessary calculations.
+        - Implemented spatial partitioning techniques to limit collision checks to nearby entities.
+        - Profiled the game to identify and address specific performance bottlenecks.
 
 3. **UI Rendering Glitches After Consolidating Level Views**
-   - **Issue**: Removing the `LevelViewLevelTwo` class and consolidating its functionalities into the `LevelView` class resulted in UI inconsistencies, such as the shield not displaying correctly in the boss level.
-   - **Solution**:
-       - Moved the shield display methods (`showShield()`, `hideShield()`) to the `LevelBoss` class to ensure proper separation of concerns.
-       - Conducted thorough UI testing across all levels to identify and fix rendering issues.
-       - Adjusted FXML layouts and styles to maintain consistent UI behavior after consolidation.
+    - **Issue**: Removing the `LevelViewLevelTwo` class and consolidating its functionalities into the `LevelView` class resulted in UI inconsistencies, such as the shield not displaying correctly in the boss level.
+    - **Solution**:
+        - Moved the shield display methods (`showShield()`, `hideShield()`) to the `LevelBoss` class to ensure proper separation of concerns.
+        - Conducted thorough UI testing across all levels to identify and fix rendering issues.
+        - Adjusted FXML layouts and styles to maintain consistent UI behavior after consolidation.
 
 ---
