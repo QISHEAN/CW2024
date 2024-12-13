@@ -797,31 +797,26 @@
 
 ---
 
-## 6.0 Unexpected Problems
+### 6.0 Unexpected Problems
+1. **Integration Issues After Refactoring**
+   - **Issue**: Refactoring to introduce new manager classes caused unexpected integration bugs between game levels and manager functionalities.
+   - **Solution**:
+       - Conducted incremental refactoring with continuous testing to identify and resolve integration issues promptly.
+       - Utilized unit tests to ensure that each manager class interacted correctly with game levels.
+       - Collaborated with team members to review changes and maintain code consistency.
 
-### 1. **Sound Settings Mute Issue**
-- **Issue**: Unable to completely mute the sound using the sound settings sliders because setting the minimum value to `0` in the FXML causes warnings.
-- **Solution**: Adjusted the sliders' minimum values to `0.01`, allowing users to reduce the volume close to mute without triggering warnings.
+2. **Performance Degradation Due to Collision Handling Enhancements**
+   - **Issue**: Optimizing collision detection mechanisms led to increased computational overhead, causing noticeable lag during intensive gameplay moments.
+   - **Solution**:
+       - Optimized collision algorithms to reduce unnecessary calculations.
+       - Implemented spatial partitioning techniques to limit collision checks to nearby entities.
+       - Profiled the game to identify and address specific performance bottlenecks.
 
-### 2. **Integration Issues After Refactoring**
-- **Issue**: Refactoring to introduce new manager classes caused unexpected integration bugs between game levels and manager functionalities.
-- **Solution**:
-    - Conducted incremental refactoring with continuous testing to identify and resolve integration issues promptly.
-    - Utilized unit tests to ensure that each manager class interacted correctly with game levels.
-    - Collaborated with team members to review changes and maintain code consistency.
-
-### 3. **Performance Degradation Due to Collision Handling Enhancements**
-- **Issue**: Optimizing collision detection mechanisms led to increased computational overhead, causing noticeable lag during intensive gameplay moments.
-- **Solution**:
-    - Optimized collision algorithms to reduce unnecessary calculations.
-    - Implemented spatial partitioning techniques to limit collision checks to nearby entities.
-    - Profiled the game to identify and address specific performance bottlenecks.
-
-### 4. **UI Rendering Glitches After Consolidating Level Views**
-- **Issue**: Removing the `LevelViewLevelTwo` class and consolidating its functionalities into the `LevelView` class resulted in UI inconsistencies, such as the shield not displaying correctly in the boss level.
-- **Solution**:
-    - Moved the shield display methods (`showShield()`, `hideShield()`) to the `LevelBoss` class to ensure proper separation of concerns.
-    - Conducted thorough UI testing across all levels to identify and fix rendering issues.
-    - Adjusted FXML layouts and styles to maintain consistent UI behavior after consolidation.
+3. **UI Rendering Glitches After Consolidating Level Views**
+   - **Issue**: Removing the `LevelViewLevelTwo` class and consolidating its functionalities into the `LevelView` class resulted in UI inconsistencies, such as the shield not displaying correctly in the boss level.
+   - **Solution**:
+       - Moved the shield display methods (`showShield()`, `hideShield()`) to the `LevelBoss` class to ensure proper separation of concerns.
+       - Conducted thorough UI testing across all levels to identify and fix rendering issues.
+       - Adjusted FXML layouts and styles to maintain consistent UI behavior after consolidation.
 
 ---
