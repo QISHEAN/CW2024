@@ -695,6 +695,12 @@
 10. **Tested and Verified Refactored Codebase Functionality and Performance**
     - **Issue**: Refactored code could introduce new bugs or performance issues.
     - **Solution**: Performed extensive Java unit and integration testing using a test-driven development (TDD) approach to ensure the refactored codebase operates correctly and maintains optimal performance.
+- **Implemented Testing**:
+
+  | **Test Class**         | **Key Methods**                                                                                                                                |
+  |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+  | `MainTest`             | `testApplicationLaunch()`, `testMultipleStageLaunch()`                                                                                         |
+  | `CollisionManagerTest` | `testHandlePlaneCollisions()`, `testHandleUserProjectileCollisions()`, `testHandleEnemyProjectileCollisions()`, `testHandleEnemyPenetration()` |
 
 ### 5.3 Design Patterns Used
 
